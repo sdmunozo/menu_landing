@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
+import 'package:landing_v3/ui/shared/custom_title_widget.dart';
+import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
+import 'package:landing_v3/ui/shared/point_row_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
-const maxWidth = 1000;
+const maxWidth = 1000.0;
 
 double responsiveFontSize(double baseSize, BoxConstraints constraints) {
   return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;
@@ -44,30 +49,100 @@ class _PresentationViewState extends State<PresentationView> {
 
   @override
   Widget build(BuildContext context) {
+    double promotionalHeight =
+        Provider.of<PromotionalWidgetHeightProvider>(context).height;
+
+    double screenHeight =
+        MediaQuery.of(context).size.height - promotionalHeight - 20;
+
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
         children: [
-          SizedBox(height: 20),
-          Text(
-            "Innova, ahorra y vende más!",
-            style: titleStyle(constraints),
-            textAlign: TextAlign.center,
+          Container(
+            height: screenHeight,
+            color: Color.fromRGBO(246, 246, 246, 1),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomTitleWidget(
+                    text: "Innova, ahorra y vende más!",
+                    constraints: constraints,
+                    maxWidth: maxWidth,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    "Tu menú digital te espera para cambiar el juego en tu restaurante",
+                    style: subtitleStyle(constraints),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  _buildVideoPlayer(constraints),
+                  const SizedBox(height: 20),
+                  DownArrowAnimationWidget(),
+                ],
+              ),
+            ),
           ),
-          Text(
-            "Tu menú digital espera para cambiar el juego",
-            style: titleStyle(constraints),
-            textAlign: TextAlign.center,
+          SizedBox(
+            height: 10,
           ),
-          SizedBox(height: 20),
-          /*constraints.maxWidth > maxWidth
-              ? Row(children: _buildVideoAndText(constraints))
-              : Column(children: _buildVideoAndText(constraints)),*/
-          constraints.maxWidth > maxWidth
-              ? Row(children: _buildVideoAndText(constraints))
-              : Column(children: _buildVideoAndText(constraints)),
+          Container(
+            height: screenHeight,
+            color: Color.fromRGBO(246, 246, 246, 1),
+            child: PointsWidget(constraints: constraints),
+          ),
         ],
       );
     });
+  }
+
+  Widget _buildVideoPlayer(BoxConstraints constraints) {
+    if (isLoading || _controller == null || !_controller!.value.isInitialized) {
+      return Container(
+          width: constraints.maxWidth > maxWidth
+              ? constraints.maxWidth * 0.6
+              : null,
+          child: Image.asset('assets/tools/Menu.png', fit: BoxFit.cover));
+    }
+
+    return Container(
+      width:
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AspectRatio(
+            aspectRatio: _controller!.value.aspectRatio,
+            child: VideoPlayer(_controller!),
+          ),
+          VideoProgressIndicator(_controller!, allowScrubbing: true),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(_controller!.value.isPlaying
+                    ? Icons.pause
+                    : Icons.play_arrow),
+                onPressed: () {
+                  setState(() {
+                    if (_controller!.value.isPlaying) {
+                      _controller!.pause();
+                    } else {
+                      _controller!.play();
+                    }
+                  });
+                },
+              ),
+              IconButton(
+                icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
+                onPressed: toggleMute,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   List<Widget> _buildVideoAndText(BoxConstraints constraints) {
@@ -197,25 +272,52 @@ class PointsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.3 : null,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 25),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('• Vende más mostrando mejor tus platillos',
-                style: subtitleStyle(constraints)),
-            SizedBox(height: 10),
-            Text('• Ahorra dinero en impresiones',
-                style: subtitleStyle(constraints)),
-            SizedBox(height: 10),
-            Text('• Libera carga de trabajo a tus meseros',
-                style: subtitleStyle(constraints)),
-            SizedBox(height: 10),
-            Text('• Marketing y promoción', style: subtitleStyle(constraints)),
-          ],
-        ),
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(height: 10),
+          CustomTitleWidget(
+            text: "Impulsa tu Restaurante",
+            constraints: constraints,
+            maxWidth: maxWidth,
+          ),
+          const SizedBox(height: 10),
+          PointRowWidget(
+            text: 'Vende más mostrando mejor tus platillos',
+            icon: Icons.trending_up,
+            maxWidth: maxWidth,
+            constraints: constraints,
+            iconPosition: "left",
+          ),
+          SizedBox(height: 10),
+          PointRowWidget(
+            text: 'Ahorra dinero en impresiones',
+            icon: Icons.attach_money,
+            maxWidth: maxWidth,
+            constraints: constraints,
+            iconPosition: "left",
+          ),
+          SizedBox(height: 10),
+          PointRowWidget(
+            text: 'Libera carga de trabajo a tus meseros',
+            icon: Icons.group,
+            maxWidth: maxWidth,
+            constraints: constraints,
+            iconPosition: "left",
+          ),
+          SizedBox(height: 10),
+          PointRowWidget(
+            text: 'Marketing y promoción',
+            icon: Icons.campaign,
+            maxWidth: maxWidth,
+            constraints: constraints,
+            iconPosition: "left",
+          ),
+          SizedBox(height: 20),
+          DownArrowAnimationWidget(),
+        ],
       ),
     );
   }

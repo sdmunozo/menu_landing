@@ -4,12 +4,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PromotionalWidget extends StatefulWidget {
-  final GlobalKey widgetKey = GlobalKey();
+  final GlobalKey widgetKey;
 
-  PromotionalWidget({Key? key}) : super(key: key);
+  PromotionalWidget({Key? key, required this.widgetKey}) : super(key: key);
 
   @override
   _PromotionalWidgetState createState() => _PromotionalWidgetState();
+
+  double getWidgetHeight() {
+    final RenderBox renderBox =
+        widgetKey.currentContext?.findRenderObject() as RenderBox;
+    return renderBox.size.height;
+  }
 }
 
 class _PromotionalWidgetState extends State<PromotionalWidget>
@@ -34,6 +40,44 @@ class _PromotionalWidgetState extends State<PromotionalWidget>
     _scaleAnimation = Tween<double>(begin: 1.0, end: 1.05).animate(_controller);
 
     _loadTimerState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final hours = _duration.inHours.toString().padLeft(2, '0');
+    final minutes = (_duration.inMinutes % 60).toString().padLeft(2, '0');
+    final seconds = (_duration.inSeconds % 60).toString().padLeft(2, '0');
+
+    return Stack(
+      key: widget.widgetKey,
+      children: [
+        AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Transform.scale(
+              scale: _scaleAnimation.value,
+              child: Container(
+                color: _colorAnimation.value,
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0, bottom: 5, left: 20, right: 20),
+                    child: Center(
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          _BuildPromotionText(
+                              hours: hours, minutes: minutes, seconds: seconds),
+                          _BuildCallToAction()
+                        ],
+                      ),
+                    )),
+              ),
+            );
+          },
+        ),
+      ],
+    );
   }
 
   Future<void> _loadTimerState() async {
@@ -85,43 +129,6 @@ class _PromotionalWidgetState extends State<PromotionalWidget>
     _controller.dispose();
     _timer?.cancel();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final hours = _duration.inHours.toString().padLeft(2, '0');
-    final minutes = (_duration.inMinutes % 60).toString().padLeft(2, '0');
-    final seconds = (_duration.inSeconds % 60).toString().padLeft(2, '0');
-
-    return Stack(
-      children: [
-        AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: _scaleAnimation.value,
-              child: Container(
-                color: _colorAnimation.value,
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15.0, horizontal: 20),
-                    child: Center(
-                      child: Wrap(
-                        alignment: WrapAlignment.center,
-                        crossAxisAlignment: WrapCrossAlignment.center,
-                        children: [
-                          _BuildPromotionText(
-                              hours: hours, minutes: minutes, seconds: seconds),
-                          _BuildCallToAction()
-                        ],
-                      ),
-                    )),
-              ),
-            );
-          },
-        ),
-      ],
-    );
   }
 }
 
