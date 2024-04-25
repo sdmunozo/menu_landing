@@ -84,7 +84,7 @@ class _PresentationViewState extends State<PresentationView> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           Container(
@@ -291,7 +291,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "left",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           PointRowWidget(
             text: 'Ahorra dinero en impresiones',
             icon: Icons.attach_money,
@@ -299,7 +299,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "left",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           PointRowWidget(
             text: 'Libera carga de trabajo a tus meseros',
             icon: Icons.group,
@@ -307,7 +307,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "left",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           PointRowWidget(
             text: 'Marketing y promoción',
             icon: Icons.campaign,
@@ -315,7 +315,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "left",
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           DownArrowAnimationWidget(),
         ],
       ),

@@ -1,9 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
+import 'package:landing_v3/ui/shared/box_point_widget.dart';
+import 'package:landing_v3/ui/shared/custom_title_widget.dart';
+import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
+import 'package:landing_v3/ui/shared/point_row_widget.dart';
+import 'package:provider/provider.dart';
 
-const maxWidth = 1000;
-const cardMaxWidth = 300.0;
-const cardMaxHeight = 120.0;
+const maxWidth = 1000.0;
 
 double responsiveFontSize(double baseSize, BoxConstraints constraints) {
   return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;
@@ -24,93 +28,98 @@ TextStyle titleStyle(BoxConstraints constraints) => TextStyle(
     );
 
 class WhyUsView extends StatelessWidget {
+  const WhyUsView({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return Padding(
-              padding: EdgeInsets.only(top: 20, bottom: 45.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: AutoSizeText(
-                      "¿Por qué un Menú Digital?",
-                      style: titleStyle(constraints),
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      minFontSize: 10,
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  _BuildContent(),
-                ],
-              ),
-            );
-          },
-        ),
-      ),
-    );
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
+        children: [
+          Container(
+            color: Color.fromRGBO(246, 246, 246, 1),
+            child: PointsWidget(constraints: constraints),
+          ),
+        ],
+      );
+    });
   }
 }
 
-class _BuildContent extends StatelessWidget {
-  const _BuildContent({
-    super.key,
-  });
+class PointsWidget extends StatelessWidget {
+  final BoxConstraints constraints;
+
+  PointsWidget({required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        List<Widget> cards = [
-          _buildTextCard(
-              '• Hace que los restaurantes reduzcan costos de impresión.',
-              constraints),
-          _buildTextCard(
-              '• Los clientes prefieren menús claros y legibles.', constraints),
-          _buildTextCard(
-              '• Los jóvenes optan por menús digitales.', constraints),
-          _buildTextCard(
-              '• Actualizaciones de los menús impresos son tediosas y costosas.',
-              constraints),
-          _buildTextCard(
-              '• Con el menú digital solicita la actualización de tu menú en minutos.',
-              constraints),
-          _buildTextCard(
-              '• Permite que tus meseros puedan trabajar mejor.', constraints),
-        ];
-
-        return Wrap(
-          alignment: WrapAlignment.center,
-          spacing: 20,
-          runSpacing: 20,
-          children: cards,
-        );
-      },
-    );
-  }
-
-  Widget _buildTextCard(String text, BoxConstraints constraints) {
-    return Card(
-      elevation: 4,
-      child: Container(
-        width: cardMaxWidth,
-        height: cardMaxHeight,
-        padding: const EdgeInsets.all(10.0),
-        alignment: Alignment.center,
-        child: AutoSizeText(
-          text,
-          style: subtitleStyle(constraints),
-          textAlign: TextAlign.center,
-          minFontSize: 10,
-          maxLines: 3,
-          overflow: TextOverflow.ellipsis,
-        ),
+    return Container(
+      width:
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const SizedBox(height: 20),
+          CustomTitleWidget(
+            text: "¿Por qué un Menú Digital?",
+            constraints: constraints,
+            maxWidth: maxWidth,
+          ),
+          const SizedBox(height: 30),
+          Wrap(
+            children: [
+              BoxPointWidget(
+                point: "Ahorro",
+                text: 'Hace que los restaurantes reduzcan costos de impresión.',
+                icon: Icons
+                    .print_disabled, // Icono de impresora con signo de prohibido
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+              BoxPointWidget(
+                point: "Claridad",
+                text: 'Los clientes prefieren menús claros y legibles.',
+                icon: Icons
+                    .visibility, // Icono de ojo, indicando claridad/visibilidad
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+              BoxPointWidget(
+                point: "Digital",
+                text: 'Los jóvenes optan por menús digitales.',
+                icon: Icons
+                    .devices_other, // Icono que representa múltiples dispositivos digitales
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+              BoxPointWidget(
+                point: "Eficiencia",
+                text:
+                    'Las actualizaciones de menús digitales son rápidas y económicas.',
+                icon: Icons.update, // Icono de actualización
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+              BoxPointWidget(
+                point: "Rapidez",
+                text:
+                    'Con el menú digital solicita la actualización de tu menú en minutos.',
+                icon: Icons.flash_on, // Icono de un rayo, que indica velocidad
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+              BoxPointWidget(
+                point: "Optimización",
+                text: 'Permite que tus meseros puedan trabajar mejor.',
+                icon: Icons.speed, // Icono que sugiere optimización
+                maxWidth: maxWidth,
+                constraints: constraints,
+              ),
+            ],
+          ),
+          SizedBox(height: 20),
+          DownArrowAnimationWidget(),
+        ],
       ),
     );
   }

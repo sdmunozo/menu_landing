@@ -72,7 +72,6 @@ class _BuildContent extends StatelessWidget {
           _buildTextContainer('• Restaurantes con menús amplios.', constraints),
           if (isWide) Spacer(),
         ];
-
         return isWide
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,

@@ -48,18 +48,12 @@ class _HomeBody extends StatelessWidget {
       color: Color.fromRGBO(246, 246, 246, 1),
       //color: Colors.red,
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           children: [
             PresentationView(),
             ForWhoView(),
-            SizedBox(
-              height: paddingHeight,
-            ),
             WhyUsView(),
-            SizedBox(
-              height: paddingHeight,
-            ),
             TestimonialsView(),
             SizedBox(
               height: paddingHeight,
