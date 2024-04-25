@@ -56,10 +56,13 @@ class _ImageSwitcherWidgetState extends State<ImageSwitcherWidget> {
                   duration: const Duration(milliseconds: 500),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
-                    child: Image.asset(
-                      _imagePaths[_index],
-                      key: ValueKey<int>(_index),
-                      fit: BoxFit.contain,
+                    child: Container(
+                      color: Colors.black,
+                      child: Image.asset(
+                        _imagePaths[_index],
+                        key: ValueKey<int>(_index),
+                        fit: BoxFit.contain,
+                      ),
                     ),
                   ),
                 ),
