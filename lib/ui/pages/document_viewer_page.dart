@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class DocumentViewer extends StatelessWidget {
   final String documentPath;
 
-  DocumentViewer({required this.documentPath});
+  const DocumentViewer({super.key, required this.documentPath});
 
   Future<Map<String, dynamic>> loadDocument() async {
     final jsonString = await rootBundle.loadString(documentPath);
@@ -43,10 +43,10 @@ class DocumentViewer extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return Text("Error loading document");
+            return const Text("Error loading document");
           }
         }
-        return CircularProgressIndicator();
+        return const CircularProgressIndicator();
       },
     );
   }

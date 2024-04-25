@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 class HomePage extends StatelessWidget {
   final GlobalKey promotionalWidgetKey = GlobalKey();
 
+  HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -30,8 +32,7 @@ class HomePage extends StatelessWidget {
     });
 
     return Scaffold(
-      body: Container(
-          child: Column(
+      body: Column(
         children: [
           PromotionalWidget(widgetKey: promotionalWidgetKey),
           Expanded(
@@ -40,7 +41,7 @@ class HomePage extends StatelessWidget {
             ),
           )
         ],
-      )),
+      ),
     );
   }
 }
@@ -50,19 +51,19 @@ class _HomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color.fromRGBO(246, 246, 246, 1),
+      color: const Color.fromRGBO(246, 246, 246, 1),
       //color: Colors.red,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10),
         child: Column(
           children: [
-            PresentationView(),
-            MenuScreensView(),
-            ForWhoView(),
-            WhyUsView(),
-            TestimonialsView(),
-            FAQView(),
-            TrustElementsView(),
+            const PresentationView(),
+            const MenuScreensView(),
+            const ForWhoView(),
+            const WhyUsView(),
+            const TestimonialsView(),
+            const FAQView(),
+            const TrustElementsView(),
             SizedBox(
               height: paddingHeight,
             ),
@@ -73,40 +74,40 @@ class _HomeBody extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: 'Política de Privacidad',
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DocumentViewer(
+                            builder: (context) => const DocumentViewer(
                                 documentPath: 'lib/data/privacy_policy.json')));
                       },
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ' | ',
                     style: TextStyle(color: Colors.black),
                   ),
                   TextSpan(
                     text: 'Términos y Condiciones',
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DocumentViewer(
+                            builder: (context) => const DocumentViewer(
                                 documentPath:
                                     'lib/data/terms_conditions.json')));
                       },
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: ' | ',
                     style: TextStyle(color: Colors.black),
                   ),
-                  TextSpan(
+                  const TextSpan(
                     text: '© 2024 4uRest Todos los derechos reservados.',
                     style: TextStyle(color: Colors.black),
                   ),
                 ],
               ),
-            ),
+            )
           ],
         ),
       ),

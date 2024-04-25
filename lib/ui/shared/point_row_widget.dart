@@ -8,13 +8,13 @@ class PointRowWidget extends StatelessWidget {
   final double maxWidth;
 
   const PointRowWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.icon,
     required this.iconPosition,
     required this.constraints,
     required this.maxWidth,
-  }) : super(key: key);
+  });
 
   double responsiveFontSize(double baseSize, BoxConstraints constraints) {
     return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;

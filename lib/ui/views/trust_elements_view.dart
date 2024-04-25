@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
-import 'package:landing_v3/ui/shared/image_switcher_widget.dart';
 import 'package:landing_v3/ui/shared/trust_elements_widget.dart';
 
 const maxWidth = 1000.0;
@@ -33,7 +32,7 @@ class TrustElementsView extends StatelessWidget {
       return Column(
         children: [
           Container(
-            color: Color.fromRGBO(246, 246, 246, 1),
+            color: const Color.fromRGBO(246, 246, 246, 1),
             child: PointsWidget(constraints: constraints),
           ),
         ],
@@ -45,11 +44,11 @@ class TrustElementsView extends StatelessWidget {
 class PointsWidget extends StatelessWidget {
   final BoxConstraints constraints;
 
-  PointsWidget({required this.constraints});
+  const PointsWidget({super.key, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.8 : null,
       child: Column(
@@ -63,7 +62,7 @@ class PointsWidget extends StatelessWidget {
             maxWidth: maxWidth,
           ),
           const SizedBox(height: 30),
-          Wrap(
+          const Wrap(
             children: [
               TrustElementWidget(
                 visualElement: Icons.store,

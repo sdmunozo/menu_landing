@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 class ImageSwitcherWidget extends StatefulWidget {
+  const ImageSwitcherWidget({super.key});
+
   @override
   _ImageSwitcherWidgetState createState() => _ImageSwitcherWidgetState();
 }
@@ -19,7 +21,7 @@ class _ImageSwitcherWidgetState extends State<ImageSwitcherWidget> {
   @override
   void initState() {
     super.initState();
-    _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
+    _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       setState(() {
         _index = (_index + 1) % _imagePaths.length;
       });
@@ -37,32 +39,44 @@ class _ImageSwitcherWidgetState extends State<ImageSwitcherWidget> {
     return GestureDetector(
       onTap: () => _showImageDialog(context, _imagePaths[_index]),
       child: Center(
-        child: Stack(
-          alignment: Alignment.center,
-          children: [
-            AnimatedSwitcher(
-              duration: const Duration(milliseconds: 500),
-              child: Image.asset(
-                _imagePaths[_index],
-                key: ValueKey<int>(_index),
-                fit: BoxFit.contain,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20.0),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.black,
+                width: 10,
               ),
+              color: Colors.black,
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(
-                    0.4), // Difumina el ícono con un overlay semitransparente
-                shape: BoxShape.circle,
-              ),
-              child: Icon(
-                Icons
-                    .zoom_in, // Ícono de zoom, sugerente para hacer clic y ver en detalle
-                size: 50,
-                color: Colors.white.withOpacity(
-                    0.7), // Ícono blanco con opacidad para suavizar su visibilidad
-              ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 500),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: Image.asset(
+                      _imagePaths[_index],
+                      key: ValueKey<int>(_index),
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.4),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.zoom_in,
+                    size: 70,
+                    color: Colors.white.withOpacity(0.7),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -74,13 +88,23 @@ class _ImageSwitcherWidgetState extends State<ImageSwitcherWidget> {
       builder: (BuildContext context) {
         return Dialog(
           backgroundColor: Colors.transparent,
-          insetPadding: EdgeInsets.all(10),
-          child: GestureDetector(
+          insetPadding: const EdgeInsets.all(10),
+          child: InkWell(
             onTap: () => Navigator.pop(context),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Image.asset(imagePath, fit: BoxFit.contain),
+            child: Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 10,
+                    ),
+                    color: Colors.black,
+                  ),
+                  child: Image.asset(imagePath, fit: BoxFit.contain),
+                ),
+              ),
             ),
           ),
         );

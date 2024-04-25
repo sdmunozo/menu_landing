@@ -8,15 +8,15 @@ class BoxPointWidget extends StatelessWidget {
   final double maxWidth;
 
   const BoxPointWidget({
-    Key? key,
+    super.key,
     required this.point,
     required this.text,
     required this.icon,
     required this.constraints,
     required this.maxWidth,
-  }) : super(key: key);
+  });
 
-  TextStyle subtitleStyle(BoxConstraints constraints) => TextStyle(
+  TextStyle subtitleStyle(BoxConstraints constraints) => const TextStyle(
         fontFamily: 'Helvetica',
         fontSize: 20,
         fontWeight: FontWeight.normal,
@@ -31,7 +31,7 @@ class BoxPointWidget extends StatelessWidget {
         width: 330,
         height: 330,
         decoration: BoxDecoration(
-          color: Color.fromARGB(51, 201, 226, 242),
+          color: const Color.fromARGB(51, 201, 226, 242),
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
             color: const Color.fromARGB(42, 0, 0, 0),
@@ -44,14 +44,15 @@ class BoxPointWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, color: Colors.green, size: 100),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(
                 point,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
               Text(

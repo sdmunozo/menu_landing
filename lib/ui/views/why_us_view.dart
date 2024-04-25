@@ -1,11 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
 import 'package:landing_v3/ui/shared/box_point_widget.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
-import 'package:landing_v3/ui/shared/point_row_widget.dart';
-import 'package:provider/provider.dart';
 
 const maxWidth = 1000.0;
 
@@ -36,7 +32,7 @@ class WhyUsView extends StatelessWidget {
       return Column(
         children: [
           Container(
-            color: Color.fromRGBO(246, 246, 246, 1),
+            color: const Color.fromRGBO(246, 246, 246, 1),
             child: PointsWidget(constraints: constraints),
           ),
         ],
@@ -48,11 +44,11 @@ class WhyUsView extends StatelessWidget {
 class PointsWidget extends StatelessWidget {
   final BoxConstraints constraints;
 
-  PointsWidget({required this.constraints});
+  const PointsWidget({super.key, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.7 : null,
       child: Column(
@@ -114,8 +110,8 @@ class PointsWidget extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 20),
-          DownArrowAnimationWidget(),
+          const SizedBox(height: 20),
+          const DownArrowAnimationWidget(),
         ],
       ),
     );

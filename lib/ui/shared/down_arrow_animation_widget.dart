@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DownArrowAnimationWidget extends StatefulWidget {
+  const DownArrowAnimationWidget({super.key});
+
   @override
   _DownArrowAnimationWidgetState createState() =>
       _DownArrowAnimationWidgetState();
@@ -21,7 +23,7 @@ class _DownArrowAnimationWidgetState extends State<DownArrowAnimationWidget>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 50,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -34,7 +36,7 @@ class _DownArrowAnimationWidgetState extends State<DownArrowAnimationWidget>
                   child: child,
                 );
               },
-              child: Icon(Icons.keyboard_double_arrow_down)),
+              child: const Icon(Icons.keyboard_double_arrow_down)),
         ],
       ),
     );

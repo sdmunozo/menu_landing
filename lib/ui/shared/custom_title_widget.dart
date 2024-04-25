@@ -5,12 +5,12 @@ class CustomTitleWidget extends StatelessWidget {
   final BoxConstraints constraints;
   final double maxWidth;
 
-  CustomTitleWidget({
-    Key? key,
+  const CustomTitleWidget({
+    super.key,
     required this.text,
     required this.constraints,
     required this.maxWidth,
-  }) : super(key: key);
+  });
 
   TextStyle _titleStyle() => TextStyle(
         fontFamily: 'Helvetica',
@@ -28,7 +28,7 @@ class CustomTitleWidget extends StatelessWidget {
           style: _titleStyle(),
           textAlign: TextAlign.center,
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           height: 3,
           width: 130,

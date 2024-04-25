@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 import 'package:landing_v3/ui/shared/testimonial_card.dart';
+import 'package:landing_v3/ui/shared/testimonial_dialog_widget.dart';
 
 const maxWidth = 1000.0;
 
@@ -73,21 +74,13 @@ class PointsWidget extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (_) => GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes01.jpeg",
-                              fit: BoxFit.contain),
-                        ),
-                      ),
-                    ),
+                    builder: (_) => TestimonialDialog(
+                        imagePath: "assets/Testimonios/Tes01.jpeg"),
                   );
                 },
               ),
 
-              // Testimonios de testimonials aquí
+              // Siguiente testimonio
               TestimonialCard(
                 testimonialText: "Excelente!! Fácil y práctico",
                 authorName: "Smoke House",
@@ -97,19 +90,13 @@ class PointsWidget extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (_) => GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes02.jpeg",
-                              fit: BoxFit.contain),
-                        ),
-                      ),
-                    ),
+                    builder: (_) => TestimonialDialog(
+                        imagePath: "assets/Testimonios/Tes02.jpeg"),
                   );
                 },
               ),
+
+              // Siguiente testimonio
               TestimonialCard(
                 testimonialText:
                     "Va excelente! Me gustaría que el color fuera personalizado",
@@ -120,19 +107,13 @@ class PointsWidget extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (_) => GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes03.jpeg",
-                              fit: BoxFit.contain),
-                        ),
-                      ),
-                    ),
+                    builder: (_) => TestimonialDialog(
+                        imagePath: "assets/Testimonios/Tes03.jpeg"),
                   );
                 },
               ),
+
+              // Siguiente testimonio
               TestimonialCard(
                 testimonialText:
                     "La verdad es que muy bien, ha tenido buena aceptación",
@@ -143,16 +124,8 @@ class PointsWidget extends StatelessWidget {
                 onTap: () {
                   showDialog(
                     context: context,
-                    builder: (_) => GestureDetector(
-                      onTap: () => Navigator.of(context).pop(),
-                      child: Dialog(
-                        child: AspectRatio(
-                          aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes04.jpeg",
-                              fit: BoxFit.contain),
-                        ),
-                      ),
-                    ),
+                    builder: (_) => TestimonialDialog(
+                        imagePath: "assets/Testimonios/Tes04.jpeg"),
                   );
                 },
               ),

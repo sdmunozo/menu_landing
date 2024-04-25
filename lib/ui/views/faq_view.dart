@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:landing_v3/data/faq.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
-import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
-import 'package:landing_v3/ui/shared/promotional_widget.dart';
 
 const maxWidth = 1000.0;
 
@@ -15,7 +13,7 @@ class FAQView extends StatelessWidget {
       return Column(
         children: [
           Container(
-            color: Color.fromRGBO(246, 246, 246, 1),
+            color: const Color.fromRGBO(246, 246, 246, 1),
             child: PointsWidget(constraints: constraints),
           ),
         ],
@@ -27,11 +25,11 @@ class FAQView extends StatelessWidget {
 class PointsWidget extends StatelessWidget {
   final BoxConstraints constraints;
 
-  PointsWidget({required this.constraints});
+  const PointsWidget({super.key, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.4 : null,
       child: Column(
@@ -45,7 +43,7 @@ class PointsWidget extends StatelessWidget {
             maxWidth: maxWidth,
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Generales",
             style: TextStyle(
                 fontSize: 20,
@@ -69,7 +67,7 @@ class PointsWidget extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Suscripción y Pagos",
             style: TextStyle(
                 fontSize: 20,
@@ -93,7 +91,7 @@ class PointsWidget extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Personalización y Actualizaciones",
             style: TextStyle(
                 fontSize: 20,
@@ -117,7 +115,7 @@ class PointsWidget extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Funcionalidades",
             style: TextStyle(
                 fontSize: 20,
@@ -141,7 +139,7 @@ class PointsWidget extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Soporte y Comunicación",
             style: TextStyle(
                 fontSize: 20,
@@ -165,7 +163,7 @@ class PointsWidget extends StatelessWidget {
                 .toList(),
           ),
           const SizedBox(height: 30),
-          Text(
+          const Text(
             "Tecnología y Optimización",
             style: TextStyle(
                 fontSize: 20,
@@ -188,7 +186,7 @@ class PointsWidget extends StatelessWidget {
                     ))
                 .toList(),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
         ],
       ),
     );

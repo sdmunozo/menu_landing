@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class FAQWidget extends StatelessWidget {
   final List<Map<String, String>> faqs;
 
-  FAQWidget({Key? key, required this.faqs}) : super(key: key);
+  const FAQWidget({super.key, required this.faqs});
 
   @override
   Widget build(BuildContext context) {
