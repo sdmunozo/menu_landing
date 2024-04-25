@@ -52,9 +52,6 @@ class _HomeBody extends StatelessWidget {
         child: Column(
           children: [
             PresentationView(),
-            SizedBox(
-              height: paddingHeight,
-            ),
             ForWhoView(),
             SizedBox(
               height: paddingHeight,
