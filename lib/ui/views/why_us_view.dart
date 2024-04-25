@@ -54,7 +54,7 @@ class PointsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.7 : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -71,24 +71,21 @@ class PointsWidget extends StatelessWidget {
               BoxPointWidget(
                 point: "Ahorro",
                 text: 'Hace que los restaurantes reduzcan costos de impresión.',
-                icon: Icons
-                    .print_disabled, // Icono de impresora con signo de prohibido
+                icon: Icons.print_disabled,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),
               BoxPointWidget(
                 point: "Claridad",
                 text: 'Los clientes prefieren menús claros y legibles.',
-                icon: Icons
-                    .visibility, // Icono de ojo, indicando claridad/visibilidad
+                icon: Icons.visibility,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),
               BoxPointWidget(
                 point: "Digital",
                 text: 'Los jóvenes optan por menús digitales.',
-                icon: Icons
-                    .devices_other, // Icono que representa múltiples dispositivos digitales
+                icon: Icons.devices_other,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),
@@ -96,7 +93,7 @@ class PointsWidget extends StatelessWidget {
                 point: "Eficiencia",
                 text:
                     'Las actualizaciones de menús digitales son rápidas y económicas.',
-                icon: Icons.update, // Icono de actualización
+                icon: Icons.update,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),
@@ -104,14 +101,14 @@ class PointsWidget extends StatelessWidget {
                 point: "Rapidez",
                 text:
                     'Con el menú digital solicita la actualización de tu menú en minutos.',
-                icon: Icons.flash_on, // Icono de un rayo, que indica velocidad
+                icon: Icons.flash_on,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),
               BoxPointWidget(
                 point: "Optimización",
                 text: 'Permite que tus meseros puedan trabajar mejor.',
-                icon: Icons.speed, // Icono que sugiere optimización
+                icon: Icons.speed,
                 maxWidth: maxWidth,
                 constraints: constraints,
               ),

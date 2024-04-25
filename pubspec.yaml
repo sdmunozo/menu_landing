@@ -32,6 +32,7 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^10.7.0
   provider: ^6.1.2
   shared_preferences: ^2.2.3
   url_launcher: ^6.2.5
@@ -75,5 +76,6 @@ flutter:
     - assets/
     - assets/tools/
     - assets/Testimonios/
+    - assets/MenuScreens/
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

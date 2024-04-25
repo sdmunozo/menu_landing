@@ -68,7 +68,7 @@ class _PromotionalWidgetState extends State<PromotionalWidget>
                         children: [
                           _BuildPromotionText(
                               hours: hours, minutes: minutes, seconds: seconds),
-                          _BuildCallToAction()
+                          BuildCallToAction()
                         ],
                       ),
                     )),
@@ -132,7 +132,7 @@ class _PromotionalWidgetState extends State<PromotionalWidget>
   }
 }
 
-class _BuildCallToAction extends StatelessWidget {
+class BuildCallToAction extends StatelessWidget {
   void _launchUrl(Uri url) async {
     if (!await launchUrl(url)) {
       print('No se pudo lanzar $url');

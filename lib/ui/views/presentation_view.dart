@@ -108,7 +108,7 @@ class _PresentationViewState extends State<PresentationView> {
 
     return Container(
       width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.55 : null,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -272,7 +272,7 @@ class PointsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.4 : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -16,13 +16,9 @@ class BoxPointWidget extends StatelessWidget {
     required this.maxWidth,
   }) : super(key: key);
 
-  double responsiveFontSize(double baseSize, BoxConstraints constraints) {
-    return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;
-  }
-
   TextStyle subtitleStyle(BoxConstraints constraints) => TextStyle(
         fontFamily: 'Helvetica',
-        fontSize: responsiveFontSize(20, constraints),
+        fontSize: 20,
         fontWeight: FontWeight.normal,
         color: Colors.black,
       );

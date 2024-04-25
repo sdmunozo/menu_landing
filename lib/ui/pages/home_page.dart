@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
 import 'package:landing_v3/ui/shared/promotional_widget.dart';
+import 'package:landing_v3/ui/views/faq_view.dart';
 import 'package:landing_v3/ui/views/for_who_view.dart';
+import 'package:landing_v3/ui/views/menu_screens_view.dart';
 import 'package:landing_v3/ui/views/presentation_view.dart';
 import 'package:landing_v3/ui/views/testimonials_view.dart';
+import 'package:landing_v3/ui/views/trust_elements_view.dart';
 import 'package:landing_v3/ui/views/why_us_view.dart';
 import 'package:provider/provider.dart';
 
@@ -52,9 +55,12 @@ class _HomeBody extends StatelessWidget {
         child: Column(
           children: [
             PresentationView(),
+            MenuScreensView(),
             ForWhoView(),
             WhyUsView(),
             TestimonialsView(),
+            FAQView(),
+            TrustElementsView(),
             SizedBox(
               height: paddingHeight,
             ),

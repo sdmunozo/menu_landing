@@ -1,12 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
-import 'package:landing_v3/ui/shared/box_point_widget.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
-import 'package:landing_v3/ui/shared/point_row_widget.dart';
 import 'package:landing_v3/ui/shared/testimonial_card.dart';
-import 'package:provider/provider.dart';
 
 const maxWidth = 1000.0;
 
@@ -55,7 +50,7 @@ class PointsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
+          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.8 : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +78,7 @@ class PointsWidget extends StatelessWidget {
                       child: Dialog(
                         child: AspectRatio(
                           aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes01.png",
+                          child: Image.asset("assets/Testimonios/Tes01.jpeg",
                               fit: BoxFit.contain),
                         ),
                       ),
@@ -107,7 +102,7 @@ class PointsWidget extends StatelessWidget {
                       child: Dialog(
                         child: AspectRatio(
                           aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes02.png",
+                          child: Image.asset("assets/Testimonios/Tes02.jpeg",
                               fit: BoxFit.contain),
                         ),
                       ),
@@ -130,7 +125,7 @@ class PointsWidget extends StatelessWidget {
                       child: Dialog(
                         child: AspectRatio(
                           aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes03.png",
+                          child: Image.asset("assets/Testimonios/Tes03.jpeg",
                               fit: BoxFit.contain),
                         ),
                       ),
@@ -153,7 +148,7 @@ class PointsWidget extends StatelessWidget {
                       child: Dialog(
                         child: AspectRatio(
                           aspectRatio: 9 / 16,
-                          child: Image.asset("assets/Testimonios/Tes04.png",
+                          child: Image.asset("assets/Testimonios/Tes04.jpeg",
                               fit: BoxFit.contain),
                         ),
                       ),
