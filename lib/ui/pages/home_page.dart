@@ -7,6 +7,7 @@ import 'package:landing_v3/ui/views/faq_view.dart';
 import 'package:landing_v3/ui/views/for_who_view.dart';
 import 'package:landing_v3/ui/views/menu_screens_view.dart';
 import 'package:landing_v3/ui/views/presentation_view.dart';
+import 'package:landing_v3/ui/views/suscriptions_view.dart';
 import 'package:landing_v3/ui/views/testimonials_view.dart';
 import 'package:landing_v3/ui/views/trust_elements_view.dart';
 import 'package:landing_v3/ui/views/why_us_view.dart';
@@ -61,6 +62,7 @@ class _HomeBody extends StatelessWidget {
             const MenuScreensView(),
             const ForWhoView(),
             const WhyUsView(),
+            const SuscriptionsView(),
             const TestimonialsView(),
             const FAQView(),
             const TrustElementsView(),
@@ -107,7 +109,7 @@ class _HomeBody extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

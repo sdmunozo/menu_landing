@@ -145,7 +145,7 @@ class BuildCallToAction extends StatelessWidget {
       padding: const EdgeInsets.all(10.0),
       child: ElevatedButton(
         onPressed: () {
-          _launchUrl(Uri.parse('https://buy.stripe.com/4gwfZ0eztgk24JWcMM'));
+          _launchUrl(Uri.parse('https://buy.stripe.com/00g4gicrld7Q2BOcMO'));
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: Colors.red,
@@ -193,7 +193,7 @@ class _BuildPromotionText extends StatelessWidget {
               ),
               TextSpan(
                 text:
-                    "| Menús Digitales desde solo 399 MX\$ al mes. Haz clic en el botón para pagar ahora. ",
+                    "| Menús Digitales desde solo 299.25 MX\$ al mes en plan anual. Haz clic en el botón para pagar ahora. ",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
