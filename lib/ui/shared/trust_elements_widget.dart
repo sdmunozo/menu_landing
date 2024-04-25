@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class TrustElementWidget extends StatelessWidget {
   final String text;
-  final IconData icon;
+  final dynamic visualElement; // Puede ser IconData o AssetImage
+  final bool isIcon; // Indica si visualElement es un icono o una imagen
 
   const TrustElementWidget({
     Key? key,
     required this.text,
-    required this.icon,
+    required this.visualElement,
+    this.isIcon = true, // Predeterminado a true si se espera un icono
   }) : super(key: key);
 
   TextStyle subtitleStyle(BoxConstraints constraints) => TextStyle(
@@ -37,7 +40,11 @@ class TrustElementWidget extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: Colors.black, size: 65),
+              isIcon
+                  ? Icon(visualElement as IconData,
+                      color: Colors.black, size: 65) // As Icon
+                  : Image.asset(visualElement as String,
+                      width: 120, height: 120), // As AssetImage
               SizedBox(
                 height: 10,
               ),

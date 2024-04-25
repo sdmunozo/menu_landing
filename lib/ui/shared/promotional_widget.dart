@@ -193,7 +193,7 @@ class _BuildPromotionText extends StatelessWidget {
               ),
               TextSpan(
                 text:
-                    "| Menús Digitales desde solo 399 MX\$. Haz clic en el botón para pagar ahora. ",
+                    "| Menús Digitales desde solo 399 MX\$ al mes. Haz clic en el botón para pagar ahora. ",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

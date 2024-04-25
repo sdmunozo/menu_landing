@@ -77,5 +77,7 @@ flutter:
     - assets/tools/
     - assets/Testimonios/
     - assets/MenuScreens/
+    - lib/data/privacy_policy.json
+    - lib/data/terms_conditions.json
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

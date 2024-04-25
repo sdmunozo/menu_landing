@@ -66,19 +66,22 @@ class PointsWidget extends StatelessWidget {
           Wrap(
             children: [
               TrustElementWidget(
-                icon: Icons.store,
+                visualElement: Icons.store,
                 text: '+12 años en la Industria',
+                isIcon: true,
               ),
               TrustElementWidget(
-                icon: FontAwesomeIcons.registered,
+                visualElement: 'assets/tools/4uRest-DM-3.png',
                 text: '4uRest es una Marca Registrada',
+                isIcon: false,
               ),
               TrustElementWidget(
-                icon: FontAwesomeIcons.tiktok,
+                visualElement: FontAwesomeIcons.tiktok,
                 text: '+9k Confian en 4uRest',
+                isIcon: true,
               ),
             ],
-          ),
+          )
         ],
       ),
     );
