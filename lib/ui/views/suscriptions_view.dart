@@ -94,7 +94,6 @@ class PointsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
               Center(
@@ -105,6 +104,7 @@ class PointsWidget extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.restaurant_menu, color: Colors.green),
                   const SizedBox(width: 10),
@@ -113,6 +113,7 @@ class PointsWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.update, color: Colors.blue),
                   const SizedBox(width: 10),
@@ -121,6 +122,7 @@ class PointsWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.support_agent, color: Colors.orange),
                   const SizedBox(width: 10),
@@ -129,6 +131,7 @@ class PointsWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.new_releases, color: Colors.purple),
                   const SizedBox(width: 10),
@@ -137,6 +140,7 @@ class PointsWidget extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.data_saver_off, color: Colors.red),
                   const SizedBox(width: 10),
