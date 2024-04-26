@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:landing_v3/data/faq.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
+import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 
 const maxWidth = 1000.0;
 
@@ -186,7 +187,8 @@ class PointsWidget extends StatelessWidget {
                     ))
                 .toList(),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 30),
+          DownArrowAnimationWidget(),
         ],
       ),
     );

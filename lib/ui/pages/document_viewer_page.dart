@@ -21,32 +21,65 @@ class DocumentViewer extends StatelessWidget {
           if (snapshot.hasData) {
             final data = snapshot.data as Map<String, dynamic>;
             return Scaffold(
-              appBar: AppBar(
-                title: Text(data['title']),
-              ),
-              body: ListView.builder(
-                itemCount: data['content'].length,
-                itemBuilder: (context, index) {
-                  final content = data['content'][index];
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      content['text'],
-                      style: TextStyle(
-                        fontWeight: content['type'] == 'bold'
-                            ? FontWeight.bold
-                            : FontWeight.normal,
+              body: Stack(
+                children: <Widget>[
+                  CustomScrollView(
+                    slivers: <Widget>[
+                      SliverAppBar(
+                        expandedHeight: 100.0,
+                        floating: false,
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          title: Text(
+                            data['title'],
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          centerTitle: true,
+                        ),
+                        leading: IconButton(
+                          icon: Icon(Icons.arrow_back),
+                          onPressed: () => Navigator.of(context).pop(),
+                        ),
+                      ),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            final content = data['content'][index];
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                content['text'],
+                                style: TextStyle(
+                                  fontWeight: content['type'] == 'bold'
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: data['content'].length,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IgnorePointer(
+                    child: Center(
+                      child: Opacity(
+                        opacity: 0.2,
+                        child: Image.asset('assets/tools/4uRest-DM-3.png'),
                       ),
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             );
           } else if (snapshot.hasError) {
-            return const Text("Error loading document");
+            return const Center(child: Text("Error loading document"));
           }
         }
-        return const CircularProgressIndicator();
+        return const Center(child: CircularProgressIndicator());
       },
     );
   }

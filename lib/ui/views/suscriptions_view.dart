@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
+import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 import 'package:landing_v3/ui/shared/trust_elements_widget.dart';
 import 'package:landing_v3/ui/shared/type_suscription_widget.dart';
 
@@ -62,7 +63,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             maxWidth: maxWidth,
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           const Wrap(
             children: [
               SubscriptionWidget(
@@ -90,7 +91,62 @@ class PointsWidget extends StatelessWidget {
                 color: Color(0XFF0A486B),
               ),
             ],
-          )
+          ),
+          const SizedBox(height: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 10),
+              Center(
+                child: const Text(
+                  "Todas las suscripciones incluyen",
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Icon(Icons.restaurant_menu, color: Colors.green),
+                  const SizedBox(width: 10),
+                  const Text("Captura inicial del Menú Digital."),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(Icons.update, color: Colors.blue),
+                  const SizedBox(width: 10),
+                  const Text("Actualizaciones ilimitadas sin costo extra."),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(Icons.support_agent, color: Colors.orange),
+                  const SizedBox(width: 10),
+                  const Text("Soporte técnico directo por WhatsApp."),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(Icons.new_releases, color: Colors.purple),
+                  const SizedBox(width: 10),
+                  const Text("Acceso a nuevas funcionalidades mensuales."),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Icon(Icons.data_saver_off, color: Colors.red),
+                  const SizedBox(width: 10),
+                  const Text("Optimización para bajo consumo de datos."),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 30),
+          DownArrowAnimationWidget(),
         ],
       ),
     );
