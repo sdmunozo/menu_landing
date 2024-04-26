@@ -6,6 +6,7 @@ class SubscriptionWidget extends StatelessWidget {
   final String name;
   final String pricePerMonth;
   final String subscriptionLink;
+  final Color color;
   final int? period;
   final String? pricePerPeriod;
   final String? monthsSaved;
@@ -15,6 +16,7 @@ class SubscriptionWidget extends StatelessWidget {
     required this.name,
     required this.pricePerMonth,
     required this.subscriptionLink,
+    required this.color,
     this.period,
     this.pricePerPeriod,
     this.monthsSaved = '0',
@@ -46,7 +48,7 @@ class SubscriptionWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
-                  color: Color(0XFF3B8686),
+                  color: color,
                   width: 2.0,
                 ),
                 borderRadius: BorderRadius.circular(10.0),
@@ -141,6 +143,7 @@ class SubscriptionWidget extends StatelessWidget {
           Positioned(
             top: 0,
             child: DiscountTime(
+                color: color,
                 discountMonths:
                     monthsSaved != null ? int.parse(monthsSaved!) : 0),
           ),
@@ -152,8 +155,10 @@ class SubscriptionWidget extends StatelessWidget {
 
 class DiscountTime extends StatelessWidget {
   final int discountMonths;
+  final Color color;
 
-  const DiscountTime({Key? key, required this.discountMonths})
+  const DiscountTime(
+      {Key? key, required this.discountMonths, required this.color})
       : super(key: key);
 
   @override
@@ -162,7 +167,7 @@ class DiscountTime extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: Color(0XFF3B8686),
+        color: color,
         borderRadius: BorderRadius.circular(20.0),
       ),
       padding: const EdgeInsets.all(8.0),
@@ -173,144 +178,3 @@ class DiscountTime extends StatelessWidget {
     );
   }
 }
-
-
-/*import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-class SubscriptionWidget extends StatelessWidget {
-  final String name;
-  final String pricePerMonth;
-  final String subscriptionLink;
-  final int? period;
-  final String? pricePerPeriod;
-  final String? monthsSaved;
-
-  const SubscriptionWidget({
-    Key? key,
-    required this.name,
-    required this.pricePerMonth,
-    required this.subscriptionLink,
-    this.period,
-    this.pricePerPeriod,
-    this.monthsSaved,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.topCenter,
-      clipBehavior: Clip.none,
-      children: [
-        Card(
-          margin: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: Color(0XFF3B8686), // Color del borde
-                width: 2.0, // Ancho del borde
-              ),
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 32.0,
-                left: 16.0,
-                right: 16.0,
-                bottom: 16.0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    name,
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    '\$$pricePerMonth/mes',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.normal,
-                      color: Colors.black,
-                    ),
-                  ),
-                  if (pricePerPeriod != null) ...[
-                    const SizedBox(height: 8),
-                    Text(
-                      'Suscripción anual de \$$pricePerPeriod',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ],
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () async {
-                      if (await canLaunch(subscriptionLink)) {
-                        await launch(subscriptionLink);
-                      } else {
-                        // handle the error here
-                      }
-                    },
-                    child: Text(
-                      'Suscríbete a $name',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all(Colors.green),
-                      padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(vertical: 12.0),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 0,
-          child: DiscountTime(
-              discountMonths:
-                  monthsSaved != null ? int.parse(monthsSaved!) : 0),
-        ),
-      ],
-    );
-  }
-}
-
-class DiscountTime extends StatelessWidget {
-  final int discountMonths;
-
-  const DiscountTime({Key? key, required this.discountMonths})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    String monthsText = discountMonths == 1 ? 'MES' : 'MESES';
-
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0XFF3B8686),
-        borderRadius: BorderRadius.circular(20.0),
-      ),
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        "AHORRAS $discountMonths $monthsText",
-        style: TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 1.5),
-      ),
-    );
-  }
-}
-
-*/

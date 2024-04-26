@@ -309,7 +309,7 @@ class PointsWidget extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           PointRowWidget(
-            text: 'Marketing y promoción',
+            text: 'Marketing y promoción para tu restaurante',
             icon: Icons.campaign,
             maxWidth: maxWidth,
             constraints: constraints,

@@ -22,7 +22,7 @@ class PointRowWidget extends StatelessWidget {
 
   TextStyle subtitleStyle(BoxConstraints constraints) => TextStyle(
         fontFamily: 'Helvetica',
-        fontSize: responsiveFontSize(20, constraints),
+        fontSize: 24, //responsiveFontSize(20, constraints),
         fontWeight: FontWeight.normal,
         color: Colors.black,
       );
