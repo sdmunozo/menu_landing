@@ -19,7 +19,7 @@ class LandingUserEventModel {
     userId = GlobalConfigProvider.sessionId;
     sessionId = GlobalConfigProvider.sessionId;
     eventType = builder.eventType;
-    eventTimestamp = DateTime.now().toUtc();
+    eventTimestamp = DateTime.now();
     details = builder.details;
   }
 

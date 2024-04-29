@@ -7,7 +7,6 @@ import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 const maxWidth = 1000.0;
@@ -49,7 +48,6 @@ class PresentationView extends StatefulWidget {
 class _PresentationViewState extends State<PresentationView> {
   VideoPlayerController? _controller;
   bool isMuted = false;
-  SharedPreferences? prefs;
   bool hasError = false;
   bool isLoading = true;
   Timer? _timer;
@@ -155,25 +153,19 @@ class _PresentationViewState extends State<PresentationView> {
   @override
   void dispose() {
     _controller?.removeListener(videoListener);
-    if (_controller != null) {
-      saveVideoPosition(_controller!.value.position);
-    }
     _controller?.dispose();
     _timer?.cancel();
     super.dispose();
   }
 
   Future<void> initializeVideoPlayer() async {
-    prefs = await SharedPreferences.getInstance();
-    double lastPosition = prefs?.getDouble('lastPosition') ?? 0;
-
     _controller = VideoPlayerController.network(
         'https://api4urest.blob.core.windows.net/landing/MenuDigital.mp4')
       ..initialize().then((_) {
         if (mounted) {
           setState(() {
             isLoading = false;
-            _controller!.seekTo(Duration(seconds: lastPosition.toInt()));
+            _controller!.seekTo(Duration(seconds: 0));
             _controller!.addListener(videoListener);
             toggleMute(context);
             _controller!.play();
@@ -198,16 +190,8 @@ class _PresentationViewState extends State<PresentationView> {
       _lastSavedPosition = currentPosition;
 
       if (_accumulatedPlayback >= const Duration(seconds: 5)) {
-        saveVideoPosition(currentPosition);
-        _accumulatedPlayback =
-            Duration.zero; // Reset the accumulated playback time
+        _accumulatedPlayback = Duration.zero;
       }
-    }
-  }
-
-  Future<void> saveVideoPosition(Duration position) async {
-    if (prefs != null && mounted && _controller != null) {
-      await prefs!.setDouble('lastPosition', position.inSeconds.toDouble());
     }
   }
 
@@ -217,11 +201,13 @@ class _PresentationViewState extends State<PresentationView> {
       _controller?.setVolume(isMuted ? 0.0 : 1.0);
       if (isMuted) {
         _timer?.cancel();
+        //print("Toggle Apagado");
       } else {
         _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
           setState(() {
             _seconds += 5;
             _logPlaybackEvent(context, _seconds);
+            //print("Toggle Encendido");
           });
         });
       }

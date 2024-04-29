@@ -1,8 +1,3 @@
-//570 -> 478
-//478 -> 464
-//464 - 443
-//443 - 436
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:landing_v3/models/landing_user_event_model.dart';
@@ -34,14 +29,15 @@ class _HomePageState extends State<HomePage> {
   int limitInactivityTime = 25; // 12 = 1 minuto 25
   Timer? activityTimer;
   bool showPromotionalWidget = false;
+  int jumpedToSuscriptions = 0;
   bool checkActivityBanner = false;
-
+  final ScrollController scrollController = ScrollController();
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 4), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -138,7 +134,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
+    // final ScrollController scrollController = ScrollController();
     String activeView = "presentationView";
 
     void showInactivityBanner() {
@@ -293,6 +289,11 @@ class _HomePageState extends State<HomePage> {
           suscriptionsViewHeightSeen) {
         activeView = "suscriptionsView";
         updatePromotionalWidgetVisibility(activeView);
+
+        if (scrollController.hasClients && jumpedToSuscriptions <= 1) {
+          scrollController.jumpTo((whyUsViewHeightSeen));
+          jumpedToSuscriptions++;
+        }
       } else if (scrollController.position.pixels <=
           testimonialsViewHeightSeen) {
         activeView = "testimonialsView";
@@ -416,34 +417,31 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         if (_isLoading)
-          Positioned.fill(
-            child: Container(
-              color: Colors.indigo,
-              child: const Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+          if (_isLoading)
+            Positioned.fill(
+              child: Container(
+                color: Colors.white,
+                child: Center(
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Container(
+                        width: 300,
+                        height: 300,
+                        child: CircularProgressIndicator(
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Color(0xff24ace4)),
+                        ),
+                      ),
+                      Image.asset('assets/tools/4uRest-DM-3.png',
+                          width: 200, height: 200),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
       ]),
     );
-
-/*
-       if (_isLoading)
-          Positioned(
-            child: Container(
-              height: 300,
-              color: Colors.black
-                  .withOpacity(0.8), // Cambiar la opacidad para pruebas
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                ),
-              ),
-            ),
-          ),
- */
   }
 }
 
@@ -483,42 +481,3 @@ class _HomeBodyState extends State<_HomeBody> {
     );
   }
 }
-
-/*
-class _HomeBody extends StatefulWidget {
-  final Map<String, GlobalKey> keys;
-
-  const _HomeBody({required this.keys});
-
-  @override
-  State<_HomeBody> createState() => _HomeBodyState();
-}
-
-class _HomeBodyState extends State<_HomeBody> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: const Color.fromRGBO(246, 246, 246, 1),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-        child: Column(
-          children: [
-            PresentationView(
-              viewKey: widget.keys['presentationView']!,
-            ),
-            MenuHighlightsView(viewKey: widget.keys['menuHighlightsView']!),
-            MenuScreensView(viewKey: widget.keys['menuScreensView']!),
-            ForWhoView(viewKey: widget.keys['forWhoView']!),
-            WhyUsView(viewKey: widget.keys['whyUsView']!),
-            SuscriptionsView(viewKey: widget.keys['suscriptionsView']!),
-            TestimonialsView(viewKey: widget.keys['testimonialsView']!),
-            FAQView(viewKey: widget.keys['faqView']!),
-            TrustElementsView(viewKey: widget.keys['trustElementsView']!),
-            const BuildFooterWidget(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-*/
