@@ -10,7 +10,7 @@ class BuildFooterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
-      textAlign: TextAlign.center, // Texto alineado al centro
+      textAlign: TextAlign.center,
       text: TextSpan(
         style: DefaultTextStyle.of(context).style,
         children: [

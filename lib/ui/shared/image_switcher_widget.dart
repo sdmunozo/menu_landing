@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ImageSwitcherWidget extends StatefulWidget {
   const ImageSwitcherWidget({super.key});
@@ -121,58 +120,18 @@ class _ImageSwitcherWidgetState extends State<ImageSwitcherWidget> {
     );
   }
 
-// Función para logear el evento de ampliación de imagen
-  void logImageZoomEvent(String imagePath) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+  void logImageZoomEvent(String imagePath) {
     String imageName = imagePath.split('/').last.split('.').first;
 
-    // Creando el objeto de detalles del evento
-    EventDetails details = EventDetails(
-        imageId:
-            imagePath, // Asumiendo que el 'imageId' se refiere a la ruta de la imagen
-        linkLabel:
-            imageName // 'linkLabel' puede usarse para almacenar el nombre de la imagen
-        );
+    EventDetails details =
+        EventDetails(imageId: imagePath, linkLabel: imageName);
 
-    // Creando el objeto del evento principal
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'defaultSessionId',
-        eventType: 'ImageZoom',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
+    EventBuilder builder = EventBuilder(
+      eventType: "ImageZoom",
+      details: details,
+    );
 
-    if (kDebugMode) {
-      //print(event.toJson()); // Utiliza toJson para imprimir el evento
-    }
-
-    // Imprimir mensaje después de lanzar la URL
-    // print('Enviando eventos pendientes... ImageZoom ${details.linkLabel}');
-    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+    Provider.of<UserEventProvider>(context, listen: false)
+        .addEvent(builder.build());
   }
-
-/*
-  // Función para logear el evento de ampliación de imagen
-  void logImageZoomEvent(String imagePath) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-    String imageName = imagePath.split('/').last.split('.').first;
-
-    var event = {
-      "userId": userId ?? 'defaultUserId',
-      "SessionId": sessionId ?? 'defaultSessionId',
-      "EventType": "ImageZoom",
-      "EventTimestamp": eventTimestamp,
-      "EventDetails": {"ImagePath": imagePath, "ImageName": imageName}
-    };
-
-    if (kDebugMode) {
-      print(event);
-    }
-  }*/
 }

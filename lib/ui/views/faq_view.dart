@@ -1,12 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:landing_v3/data/faq.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const maxWidth = 1000.0;
 
@@ -33,55 +31,18 @@ class PointsWidget extends StatelessWidget {
 
   const PointsWidget({super.key, required this.constraints});
 
-  void _logFAQEvent(String faqId, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+  void _logFAQEvent(String faqId, BuildContext context) {
+    EventDetails details = EventDetails(faqId: faqId);
 
-    // Creando el objeto de detalles del evento
-    EventDetails details = EventDetails(
-        faqId:
-            faqId // Asegúrate de que 'faqId' es un campo definido en EventDetails
-        );
+    EventBuilder builder = EventBuilder(
+      eventType: "FAQClick",
+      details: details,
+    );
 
-    // Creando el objeto del evento principal
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'defaultSessionId',
-        eventType: 'FAQClick',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
-
-    if (kDebugMode) {
-      //print(event.toJson()); // Utiliza toJson para imprimir el evento
-    }
-
-    // Imprimir mensaje después de lanzar la URL
-    //print('Enviando eventos pendientes... FAQClick ${details.faqId}');
-    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+    Provider.of<UserEventProvider>(context, listen: false)
+        .addEvent(builder.build());
   }
 
-/*
-  void _logFAQEvent(String faqId) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-    var event = {
-      "userId": userId ?? 'defaultUserId',
-      "SessionId": sessionId ?? 'defaultSessionId',
-      "EventType": "FAQClick",
-      "EventTimestamp": eventTimestamp,
-      "EventDetails": {"FAQId": faqId}
-    };
-
-    if (kDebugMode) {
-      print(event);
-    }
-  }
-*/
   @override
   Widget build(BuildContext context) {
     return SizedBox(

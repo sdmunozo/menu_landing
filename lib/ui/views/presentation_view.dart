@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
@@ -11,6 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
 
 const maxWidth = 1000.0;
+int positionvideo = 0;
 
 double responsiveFontSize(double baseSize, BoxConstraints constraints) {
   return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;
@@ -199,7 +200,12 @@ class _PresentationViewState extends State<PresentationView> {
       _controller!.seekTo(Duration.zero);
       _controller!.play();
     }
-    saveVideoPosition();
+    if (positionvideo <= 25) {
+      positionvideo++;
+    } else {
+      saveVideoPosition();
+      positionvideo = 0;
+    }
   }
 
   void toggleMute(BuildContext context) {
@@ -209,9 +215,9 @@ class _PresentationViewState extends State<PresentationView> {
       if (isMuted) {
         _timer?.cancel();
       } else {
-        _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+        _timer = Timer.periodic(const Duration(seconds: 5), (timer) {
           setState(() {
-            _seconds += 3;
+            _seconds += 5;
             _logPlaybackEvent(context, _seconds);
           });
         });
@@ -219,94 +225,15 @@ class _PresentationViewState extends State<PresentationView> {
     });
   }
 
-  void _logPlaybackEvent(BuildContext context, int playbackSeconds) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
+  void _logPlaybackEvent(BuildContext context, int playbackSeconds) {
     EventDetails details = EventDetails(playbackTime: playbackSeconds);
 
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'defaultSessionId',
-        eventType: 'PlaybackWithVolume',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
+    EventBuilder builder = EventBuilder(
+      eventType: "PlaybackWithVolume",
+      details: details,
+    );
 
-    if (kDebugMode) {
-      //print(event.toJson());
-    }
-
-    // Imprimir mensaje después de lanzar la URL
-    //print('Enviando eventos pendientes... _logPlaybackEvent');
-    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+    Provider.of<UserEventProvider>(context, listen: false)
+        .addEvent(builder.build());
   }
 }
-
-/*
-  void toggleMute() {
-    setState(() {
-      isMuted = !isMuted;
-      _controller?.setVolume(isMuted ? 0.0 : 1.0);
-      if (isMuted) {
-        _timer?.cancel();
-      } else {
-        _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
-          setState(() {
-            _seconds += 3;
-            _logPlaybackEvent();
-          });
-        });
-      }
-    });
-  }
-
-*/
-
-/*
-  void _logPlaybackEvent() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-    EventDetails details = EventDetails(
-        playbackTime:
-            _seconds
-        );
-
-
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'undefinedSessionId',
-        eventType: 'PlaybackWithVolume',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
-
-    if (kDebugMode) {
-      print(event.toJson());
-    }
-    */
-
-  
-
-/*
-  void _logPlaybackEvent() async {
-    String? sessionId = prefs?.getString('sessionId');
-    String? userId = prefs?.getString('userId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-    var event = {
-      "UserId": userId,
-      "SessionId": sessionId ?? 'undefinedSessionId',
-      "EventType": "PlaybackWithVolume",
-      "EventTimestamp": eventTimestamp,
-      "EventDetails": {"PlaybackTime": _seconds}
-    };
-
-    if (kDebugMode) {
-      print(event);
-    }
-  }*/
-

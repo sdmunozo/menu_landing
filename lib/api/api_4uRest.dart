@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 class Api4uRest {
-  static Dio _dio = Dio()
+  static final Dio _dio = Dio()
     ..options.baseUrl = 'https://netship20240323121328.azurewebsites.net/api'
     ..options.headers = {
       'ngrok-skip-browser-warning': 'true',
@@ -45,10 +45,9 @@ class Api4uRest {
       }
     } catch (e) {
       if (e is DioException) {
-        print(
-            'DioError en el POST: ${e.response?.data}, Estado: ${e.response?.statusCode}');
+        //print('DioError en el POST: ${e.response?.data}, Estado: ${e.response?.statusCode}');
       } else {
-        print('Error en el POST: $e');
+        //print('Error en el POST: $e');
       }
     }
   }

@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SubscriptionWidget extends StatelessWidget {
@@ -31,29 +29,16 @@ class SubscriptionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Future<void> launchUrlLink(Uri url, BuildContext context) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? userId = prefs.getString('userId');
-      String? sessionId = prefs.getString('sessionId');
-      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-      // Crea un objeto EventDetails
       EventDetails details =
           EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
-      // 'Subscripción Anual - Banner'); // Asegúrate de definir correctamente el linkLabel
 
-      // Crea un objeto LandingUserEventModel
-      LandingUserEventModel event = LandingUserEventModel(
-          userId: userId ?? 'defaultUserId',
-          sessionId: sessionId ?? 'defaultSessionId',
-          eventType: 'ExternalLink',
-          eventTimestamp: DateTime.parse(eventTimestamp),
-          details: details);
+      EventBuilder builder = EventBuilder(
+        eventType: "ExternalLink",
+        details: details,
+      );
 
-      // Imprimir mensaje antes de enviar el evento
-      //print('Enviando evento: ${event.toJson()}');
-
-      // Registra el evento sin escuchar cambios en Provider
-      //Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+      Provider.of<UserEventProvider>(context, listen: false)
+          .addEvent(builder.build());
 
       try {
         bool launched =
@@ -66,120 +51,7 @@ class SubscriptionWidget extends StatelessWidget {
       } catch (e) {
         //print('Error al lanzar $url: $e');
       }
-
-      // Imprimir mensaje después de lanzar la URL
-      //print('Enviando eventos pendientes... ExternalLink ${details.linkLabel}');
-      Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
     }
-
-    /*
-    void launchUrlLink(Uri url, BuildContext context) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? userId = prefs.getString('userId');
-      String? sessionId = prefs.getString('sessionId');
-      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-      // Crea un objeto EventDetails
-      EventDetails details =
-          EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
-      // 'Subscripción Anual - Banner'); // Asegúrate de definir correctamente el linkLabel
-
-      // Crea un objeto LandingUserEventModel
-      LandingUserEventModel event = LandingUserEventModel(
-          userId: userId ?? 'defaultUserId',
-          sessionId: sessionId ?? 'defaultSessionId',
-          eventType: 'ExternalLink',
-          eventTimestamp: DateTime.parse(eventTimestamp),
-          details: details);
-
-      // Registra el evento sin escuchar cambios en Provider
-      Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
-
-      try {
-        bool launched =
-            await launchUrl(url, mode: LaunchMode.externalApplication);
-        if (!launched) {
-          if (kDebugMode) {
-            print('No se pudo lanzar $url');
-          }
-        } else {
-          if (kDebugMode) {
-            print('Enlace lanzado con éxito: $url');
-          }
-        }
-      } catch (e) {
-        if (kDebugMode) {
-          print('Error al lanzar $url: $e');
-        }
-      }
-
-      // Envía todos los eventos pendientes después de lanzar la URL
-      Provider.of<UserEventProvider>(context, listen: false).sendEvents();
-    }
-*/
-/*
-    void launchUrlLink(Uri url) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? userId = prefs.getString('userId');
-      String? sessionId = prefs.getString('sessionId');
-      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-      // Crea un objeto EventDetails
-      EventDetails details =
-          EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
-
-      // Crea un objeto LandingUserEventModel
-      LandingUserEventModel event = LandingUserEventModel(
-          userId: userId ?? 'defaultUserId',
-          sessionId: sessionId ?? 'defaultSessionId',
-          eventType: 'ExternalLink',
-          eventTimestamp: DateTime.parse(eventTimestamp),
-          details: details);
-
-      // Imprime el evento si estás en modo de depuración
-      if (kDebugMode) {
-        print(event.toJson()); // Utiliza toJson para imprimir el evento
-      }
-
-      // Intenta lanzar el URL
-      if (!await launchUrl(url)) {
-        if (kDebugMode) {
-          //print('No se pudo lanzar $url');
-        }
-        // Considera enviar el evento al servidor incluso si el enlace no se pudo abrir
-        // Aquí podrías llamar a una función para enviar el evento al servidor
-      }
-    }
-*/
-    /*
-    void launchUrlLink(Uri url) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      String? userId = prefs.getString('userId');
-      String? sessionId = prefs.getString('sessionId');
-      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
-      var event = {
-        "UserId": userId ?? 'defaultUserId',
-        "SessionId": sessionId ?? 'defaultSessionId',
-        "EventType": "ExternalLink",
-        "EventTimestamp": eventTimestamp,
-        "EventDetails": {
-          "LinkDestination": url.toString(),
-          "LinkLabel": linkLabel
-        }
-      };
-
-      if (kDebugMode) {
-        print(event);
-      }
-
-      if (!await launchUrl(url)) {
-        if (kDebugMode) {
-          print('No se pudo lanzar $url');
-        }
-      }
-    }
-    */
 
     if (period == 1) {
       return const SizedBox();

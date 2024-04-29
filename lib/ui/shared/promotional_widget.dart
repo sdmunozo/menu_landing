@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:provider/provider.dart';
-import 'dart:async';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
 
 class PromotionalWidget extends StatefulWidget {
@@ -162,26 +162,17 @@ class BuildCallToAction extends StatelessWidget {
   const BuildCallToAction({super.key});
 
   Future<void> launchUrlLink(Uri url, BuildContext context) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-
     EventDetails details = EventDetails(
         linkDestination: url.toString(),
         linkLabel: 'Subscripción Anual - Banner');
 
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'defaultSessionId',
-        eventType: 'ExternalLink',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
+    EventBuilder builder = EventBuilder(
+      eventType: "ExternalLink",
+      details: details,
+    );
 
-    if (kDebugMode) {
-      // print(event.toJson());
-    }
+    Provider.of<UserEventProvider>(context, listen: false)
+        .addEvent(builder.build());
 
     try {
       bool launched =
@@ -201,9 +192,6 @@ class BuildCallToAction extends StatelessWidget {
         //print('Error al lanzar $url: $e');
       }
     }
-
-    //print('Enviando eventos pendientes... ExternalLink ${details.linkLabel}');
-    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
   }
 
   @override

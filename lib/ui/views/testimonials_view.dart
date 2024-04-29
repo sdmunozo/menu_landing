@@ -1,13 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/models/landing_user_event_model.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
 import 'package:landing_v3/ui/shared/testimonial_card.dart';
 import 'package:landing_v3/ui/shared/testimonial_dialog_widget.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 const maxWidth = 1000.0;
 
@@ -128,23 +126,18 @@ class PointsWidget extends StatelessWidget {
     );
   }
 
-  void logImageZoomEvent(String imagePath, BuildContext context) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+  void logImageZoomEvent(String imagePath, BuildContext context) {
     String imageName = imagePath.split('/').last.split('.').first;
 
     EventDetails details =
         EventDetails(imageId: imagePath, linkLabel: imageName);
 
-    LandingUserEventModel event = LandingUserEventModel(
-        userId: userId ?? 'defaultUserId',
-        sessionId: sessionId ?? 'defaultSessionId',
-        eventType: 'ImageZoom',
-        eventTimestamp: DateTime.parse(eventTimestamp),
-        details: details);
+    EventBuilder builder = EventBuilder(
+      eventType: "ImageZoom",
+      details: details,
+    );
 
-    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+    Provider.of<UserEventProvider>(context, listen: false)
+        .addEvent(builder.build());
   }
 }
