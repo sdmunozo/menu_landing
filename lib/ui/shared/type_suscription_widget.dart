@@ -1,31 +1,188 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:landing_v3/data/landing_user_event_model.dart';
+import 'package:landing_v3/provider/user_event_provider_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SubscriptionWidget extends StatelessWidget {
   final String name;
   final String pricePerMonth;
   final String subscriptionLink;
   final Color color;
+  final String linkLabel;
   final int? period;
   final String? pricePerPeriod;
   final String? monthsSaved;
 
   const SubscriptionWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.pricePerMonth,
     required this.subscriptionLink,
     required this.color,
+    required this.linkLabel,
     this.period,
     this.pricePerPeriod,
     this.monthsSaved = '0',
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
+    Future<void> launchUrlLink(Uri url, BuildContext context) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String? sessionId = prefs.getString('sessionId');
+      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+      // Crea un objeto EventDetails
+      EventDetails details =
+          EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
+      // 'Subscripción Anual - Banner'); // Asegúrate de definir correctamente el linkLabel
+
+      // Crea un objeto LandingUserEventModel
+      LandingUserEventModel event = LandingUserEventModel(
+          userId: userId ?? 'defaultUserId',
+          sessionId: sessionId ?? 'defaultSessionId',
+          eventType: 'ExternalLink',
+          eventTimestamp: DateTime.parse(eventTimestamp),
+          details: details);
+
+      // Imprimir mensaje antes de enviar el evento
+      //print('Enviando evento: ${event.toJson()}');
+
+      // Registra el evento sin escuchar cambios en Provider
+      //Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+
+      try {
+        bool launched =
+            await launchUrl(url, mode: LaunchMode.externalApplication);
+        if (!launched) {
+          //print('No se pudo lanzar $url');
+        } else {
+          //print('Enlace lanzado con éxito: $url');
+        }
+      } catch (e) {
+        //print('Error al lanzar $url: $e');
+      }
+
+      // Imprimir mensaje después de lanzar la URL
+      //print('Enviando eventos pendientes... ExternalLink ${details.linkLabel}');
+      Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+    }
+
+    /*
+    void launchUrlLink(Uri url, BuildContext context) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String? sessionId = prefs.getString('sessionId');
+      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+      // Crea un objeto EventDetails
+      EventDetails details =
+          EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
+      // 'Subscripción Anual - Banner'); // Asegúrate de definir correctamente el linkLabel
+
+      // Crea un objeto LandingUserEventModel
+      LandingUserEventModel event = LandingUserEventModel(
+          userId: userId ?? 'defaultUserId',
+          sessionId: sessionId ?? 'defaultSessionId',
+          eventType: 'ExternalLink',
+          eventTimestamp: DateTime.parse(eventTimestamp),
+          details: details);
+
+      // Registra el evento sin escuchar cambios en Provider
+      Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
+
+      try {
+        bool launched =
+            await launchUrl(url, mode: LaunchMode.externalApplication);
+        if (!launched) {
+          if (kDebugMode) {
+            print('No se pudo lanzar $url');
+          }
+        } else {
+          if (kDebugMode) {
+            print('Enlace lanzado con éxito: $url');
+          }
+        }
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error al lanzar $url: $e');
+        }
+      }
+
+      // Envía todos los eventos pendientes después de lanzar la URL
+      Provider.of<UserEventProvider>(context, listen: false).sendEvents();
+    }
+*/
+/*
+    void launchUrlLink(Uri url) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String? sessionId = prefs.getString('sessionId');
+      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+      // Crea un objeto EventDetails
+      EventDetails details =
+          EventDetails(linkDestination: url.toString(), linkLabel: linkLabel);
+
+      // Crea un objeto LandingUserEventModel
+      LandingUserEventModel event = LandingUserEventModel(
+          userId: userId ?? 'defaultUserId',
+          sessionId: sessionId ?? 'defaultSessionId',
+          eventType: 'ExternalLink',
+          eventTimestamp: DateTime.parse(eventTimestamp),
+          details: details);
+
+      // Imprime el evento si estás en modo de depuración
+      if (kDebugMode) {
+        print(event.toJson()); // Utiliza toJson para imprimir el evento
+      }
+
+      // Intenta lanzar el URL
+      if (!await launchUrl(url)) {
+        if (kDebugMode) {
+          //print('No se pudo lanzar $url');
+        }
+        // Considera enviar el evento al servidor incluso si el enlace no se pudo abrir
+        // Aquí podrías llamar a una función para enviar el evento al servidor
+      }
+    }
+*/
+    /*
+    void launchUrlLink(Uri url) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? userId = prefs.getString('userId');
+      String? sessionId = prefs.getString('sessionId');
+      String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+      var event = {
+        "UserId": userId ?? 'defaultUserId',
+        "SessionId": sessionId ?? 'defaultSessionId',
+        "EventType": "ExternalLink",
+        "EventTimestamp": eventTimestamp,
+        "EventDetails": {
+          "LinkDestination": url.toString(),
+          "LinkLabel": linkLabel
+        }
+      };
+
+      if (kDebugMode) {
+        print(event);
+      }
+
+      if (!await launchUrl(url)) {
+        if (kDebugMode) {
+          print('No se pudo lanzar $url');
+        }
+      }
+    }
+    */
+
     if (period == 1) {
-      return SizedBox();
+      return const SizedBox();
     }
 
     String subscriptionText;
@@ -44,7 +201,7 @@ class SubscriptionWidget extends StatelessWidget {
         Card(
           margin: const EdgeInsets.all(16.0),
           child: ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: 300),
+            constraints: const BoxConstraints(maxWidth: 300),
             child: Container(
               decoration: BoxDecoration(
                 border: Border.all(
@@ -65,7 +222,7 @@ class SubscriptionWidget extends StatelessWidget {
                   children: [
                     Text(
                       name,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -84,7 +241,7 @@ class SubscriptionWidget extends StatelessWidget {
                         ),
                         Text(
                           '\$$pricePerMonth/mes',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.normal,
                             color: Colors.black,
@@ -107,28 +264,26 @@ class SubscriptionWidget extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        onPressed: () async {
-                          if (await canLaunch(subscriptionLink)) {
-                            await launch(subscriptionLink);
-                          } else {}
+                        onPressed: () {
+                          launchUrlLink(Uri.parse(subscriptionLink), context);
                         },
-                        child: Text(
-                          'Suscríbete a $name',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
                         style: ButtonStyle(
                           backgroundColor:
-                              MaterialStateProperty.all(Colors.green),
-                          padding: MaterialStateProperty.all(
+                              WidgetStateProperty.all(Colors.green),
+                          padding: WidgetStateProperty.all(
                             const EdgeInsets.symmetric(vertical: 12.0),
                           ),
-                          shape: MaterialStateProperty.all(
+                          shape: WidgetStateProperty.all(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0),
                             ),
+                          ),
+                        ),
+                        child: Text(
+                          'Suscríbete a $name',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
                           ),
                         ),
                       ),
@@ -158,8 +313,7 @@ class DiscountTime extends StatelessWidget {
   final Color color;
 
   const DiscountTime(
-      {Key? key, required this.discountMonths, required this.color})
-      : super(key: key);
+      {super.key, required this.discountMonths, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +327,8 @@ class DiscountTime extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(
         "AHORRAS $discountMonths $monthsText",
-        style: TextStyle(color: Colors.white, fontSize: 10, letterSpacing: 1.5),
+        style: const TextStyle(
+            color: Colors.white, fontSize: 10, letterSpacing: 1.5),
       ),
     );
   }

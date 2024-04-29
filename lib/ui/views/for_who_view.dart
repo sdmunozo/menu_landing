@@ -27,7 +27,9 @@ TextStyle titleStyle(BoxConstraints constraints) => TextStyle(
     );
 
 class ForWhoView extends StatelessWidget {
-  const ForWhoView({super.key});
+  final GlobalKey viewKey;
+
+  const ForWhoView({super.key, required this.viewKey});
 
   @override
   Widget build(BuildContext context) {
@@ -35,13 +37,13 @@ class ForWhoView extends StatelessWidget {
         Provider.of<PromotionalWidgetHeightProvider>(context).height;
 
     double screenHeight =
-        MediaQuery.of(context).size.height - promotionalHeight - 20;
+        MediaQuery.of(context).size.height - promotionalHeight;
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
+        key: viewKey,
         children: [
-          Container(
+          SizedBox(
             height: screenHeight,
-            color: Color.fromRGBO(246, 246, 246, 1),
             child: PointsWidget(constraints: constraints),
           ),
         ],
@@ -51,9 +53,7 @@ class ForWhoView extends StatelessWidget {
 }
 
 class _BuildContent extends StatelessWidget {
-  const _BuildContent({
-    super.key,
-  });
+  const _BuildContent();
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +61,16 @@ class _BuildContent extends StatelessWidget {
       builder: (context, constraints) {
         bool isWide = constraints.maxWidth > maxWidth;
         List<Widget> textContainers = [
-          if (isWide) Spacer(),
+          if (isWide) const Spacer(),
           _buildTextContainer(
               '• Restaurantes con variaciones de menú frecuentes.',
               constraints),
-          SizedBox(width: 10, height: 10),
+          const SizedBox(width: 10, height: 10),
           _buildTextContainer(
               '• Restaurantes que necesitan vender más.', constraints),
-          SizedBox(width: 10, height: 10),
+          const SizedBox(width: 10, height: 10),
           _buildTextContainer('• Restaurantes con menús amplios.', constraints),
-          if (isWide) Spacer(),
+          if (isWide) const Spacer(),
         ];
         return isWide
             ? Row(
@@ -109,11 +109,11 @@ class _BuildContent extends StatelessWidget {
 class PointsWidget extends StatelessWidget {
   final BoxConstraints constraints;
 
-  PointsWidget({required this.constraints});
+  const PointsWidget({super.key, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.4 : null,
       child: Column(
@@ -134,7 +134,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "right",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           PointRowWidget(
             text: 'Restaurantes que necesitan vender más.',
             icon: Icons.data_saver_off,
@@ -142,7 +142,7 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "right",
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           PointRowWidget(
             text: 'Restaurantes con menús amplios.',
             icon: Icons.menu_book_outlined,
@@ -150,8 +150,8 @@ class PointsWidget extends StatelessWidget {
             constraints: constraints,
             iconPosition: "right",
           ),
-          SizedBox(height: 20),
-          DownArrowAnimationWidget(),
+          const SizedBox(height: 20),
+          const DownArrowAnimationWidget(),
         ],
       ),
     );

@@ -10,14 +10,14 @@ class TestimonialCard extends StatefulWidget {
   final VoidCallback onTap;
 
   const TestimonialCard({
-    Key? key,
+    super.key,
     required this.testimonialText,
     required this.authorName,
     required this.authorDetails,
     required this.authorImage,
     required this.rating,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   _TestimonialCardState createState() => _TestimonialCardState();
@@ -30,7 +30,7 @@ class _TestimonialCardState extends State<TestimonialCard> {
   void initState() {
     super.initState();
     _isTouchAppOutlined = true;
-    Timer.periodic(Duration(milliseconds: 500), (timer) {
+    Timer.periodic(const Duration(milliseconds: 500), (timer) {
       setState(() {
         _isTouchAppOutlined = !_isTouchAppOutlined;
       });
@@ -55,25 +55,25 @@ class _TestimonialCardState extends State<TestimonialCard> {
               children: <Widget>[
                 Text(
                   '"${widget.testimonialText}"',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontStyle: FontStyle.italic,
                     fontSize: 16.0,
                   ),
                 ),
-                SizedBox(height: 4.0),
+                const SizedBox(height: 4.0),
                 Row(
                   children: <Widget>[
-                    SizedBox(width: 20.0),
+                    const SizedBox(width: 20.0),
                     CircleAvatar(
                       backgroundImage: widget.authorImage,
                     ),
-                    SizedBox(width: 15.0),
+                    const SizedBox(width: 15.0),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Text(
                           widget.authorName,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -96,7 +96,7 @@ class _TestimonialCardState extends State<TestimonialCard> {
                         ),
                       ],
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Icon(
                       _isTouchAppOutlined
                           ? Icons.touch_app_outlined

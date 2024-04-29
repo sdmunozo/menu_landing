@@ -25,7 +25,9 @@ TextStyle titleStyle(BoxConstraints constraints) => TextStyle(
     );
 
 class MenuScreensView extends StatelessWidget {
-  const MenuScreensView({super.key});
+  final GlobalKey viewKey;
+
+  const MenuScreensView({super.key, required this.viewKey});
 
   @override
   Widget build(BuildContext context) {
@@ -33,13 +35,13 @@ class MenuScreensView extends StatelessWidget {
         Provider.of<PromotionalWidgetHeightProvider>(context).height;
 
     double screenHeight =
-        MediaQuery.of(context).size.height - promotionalHeight - 20;
+        MediaQuery.of(context).size.height - promotionalHeight;
 
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
+        key: viewKey,
         children: [
-          Container(
-            color: Color.fromRGBO(246, 246, 246, 1),
+          SizedBox(
             height: screenHeight,
             child: PointsWidget(constraints: constraints),
           ),
@@ -52,11 +54,11 @@ class MenuScreensView extends StatelessWidget {
 class PointsWidget extends StatelessWidget {
   final BoxConstraints constraints;
 
-  PointsWidget({required this.constraints});
+  const PointsWidget({super.key, required this.constraints});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.5 : null,
       child: Column(
@@ -70,7 +72,7 @@ class PointsWidget extends StatelessWidget {
             maxWidth: maxWidth,
           ),
           const SizedBox(height: 30),
-          Expanded(
+          const Expanded(
             child: ImageSwitcherWidget(),
           ),
         ],

@@ -20,7 +20,7 @@ class PointRowWidget extends StatelessWidget {
     return constraints.maxWidth > maxWidth ? baseSize + 10 : baseSize;
   }
 
-  TextStyle subtitleStyle(BoxConstraints constraints) => TextStyle(
+  TextStyle subtitleStyle(BoxConstraints constraints) => const TextStyle(
         fontFamily: 'Helvetica',
         fontSize: 24, //responsiveFontSize(20, constraints),
         fontWeight: FontWeight.normal,
@@ -32,7 +32,7 @@ class PointRowWidget extends StatelessWidget {
     List<Widget> rowChildren = iconPosition == "left"
         ? [
             Icon(icon, color: Colors.green, size: 50),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Expanded(
               child: Text(text, style: subtitleStyle(constraints)),
             ),
@@ -41,7 +41,7 @@ class PointRowWidget extends StatelessWidget {
             Expanded(
               child: Text(text, style: subtitleStyle(constraints)),
             ),
-            SizedBox(width: 15),
+            const SizedBox(width: 15),
             Icon(icon, color: Colors.green, size: 50),
           ];
 

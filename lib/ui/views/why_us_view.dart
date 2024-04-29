@@ -24,17 +24,16 @@ TextStyle titleStyle(BoxConstraints constraints) => TextStyle(
     );
 
 class WhyUsView extends StatelessWidget {
-  const WhyUsView({super.key});
+  final GlobalKey viewKey;
+  const WhyUsView({super.key, required this.viewKey});
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
+        key: viewKey,
         children: [
-          Container(
-            color: const Color.fromRGBO(246, 246, 246, 1),
-            child: PointsWidget(constraints: constraints),
-          ),
+          PointsWidget(constraints: constraints),
         ],
       );
     });

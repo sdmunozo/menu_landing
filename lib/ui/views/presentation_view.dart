@@ -1,8 +1,11 @@
+import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:landing_v3/data/landing_user_event_model.dart';
 import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
+import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
-import 'package:landing_v3/ui/shared/point_row_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:video_player/video_player.dart';
@@ -28,10 +31,18 @@ TextStyle titleStyle(BoxConstraints constraints) => TextStyle(
     );
 
 class PresentationView extends StatefulWidget {
-  const PresentationView({super.key});
+  final GlobalKey viewKey;
+
+  const PresentationView({super.key, required this.viewKey});
 
   @override
   State<PresentationView> createState() => _PresentationViewState();
+
+  double getWidgetHeight() {
+    final RenderBox renderBox =
+        viewKey.currentContext?.findRenderObject() as RenderBox;
+    return renderBox.size.height;
+  }
 }
 
 class _PresentationViewState extends State<PresentationView> {
@@ -40,6 +51,8 @@ class _PresentationViewState extends State<PresentationView> {
   SharedPreferences? prefs;
   bool hasError = false;
   bool isLoading = true;
+  Timer? _timer;
+  int _seconds = 0;
 
   @override
   void initState() {
@@ -53,44 +66,34 @@ class _PresentationViewState extends State<PresentationView> {
         Provider.of<PromotionalWidgetHeightProvider>(context).height;
 
     double screenHeight =
-        MediaQuery.of(context).size.height - promotionalHeight - 20;
+        MediaQuery.of(context).size.height - promotionalHeight;
 
     return LayoutBuilder(builder: (context, constraints) {
       return Column(
+        key: widget.viewKey,
         children: [
-          Container(
+          SizedBox(
             height: screenHeight,
-            color: Color.fromRGBO(246, 246, 246, 1),
-            child: Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomTitleWidget(
-                    text: "Innova, ahorra y vende más!",
-                    constraints: constraints,
-                    maxWidth: maxWidth,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    "Tu menú digital te espera para cambiar el juego en tu restaurante",
-                    style: subtitleStyle(constraints),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 20),
-                  _buildVideoPlayer(constraints),
-                  const SizedBox(height: 20),
-                  DownArrowAnimationWidget(),
-                ],
-              ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomTitleWidget(
+                  text: "Innova, ahorra y vende más!",
+                  constraints: constraints,
+                  maxWidth: maxWidth,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  "Tu menú digital te espera para cambiar el juego en tu restaurante",
+                  style: subtitleStyle(constraints),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 20),
+                _buildVideoPlayer(constraints),
+                const SizedBox(height: 20),
+                const DownArrowAnimationWidget(),
+              ],
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: screenHeight,
-            color: Color.fromRGBO(246, 246, 246, 1),
-            child: PointsWidget(constraints: constraints),
           ),
         ],
       );
@@ -99,14 +102,14 @@ class _PresentationViewState extends State<PresentationView> {
 
   Widget _buildVideoPlayer(BoxConstraints constraints) {
     if (isLoading || _controller == null || !_controller!.value.isInitialized) {
-      return Container(
+      return SizedBox(
           width: constraints.maxWidth > maxWidth
               ? constraints.maxWidth * 0.6
               : null,
           child: Image.asset('assets/tools/Menu.png', fit: BoxFit.cover));
     }
 
-    return Container(
+    return SizedBox(
       width:
           constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.55 : null,
       child: Column(
@@ -136,7 +139,8 @@ class _PresentationViewState extends State<PresentationView> {
               ),
               IconButton(
                 icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
-                onPressed: toggleMute,
+                //onPressed: toggleMute,
+                onPressed: () => toggleMute(context),
               ),
             ],
           ),
@@ -145,66 +149,12 @@ class _PresentationViewState extends State<PresentationView> {
     );
   }
 
-  List<Widget> _buildVideoAndText(BoxConstraints constraints) {
-    if (isLoading) {
-      return [
-        Container(
-            width: constraints.maxWidth > maxWidth
-                ? constraints.maxWidth * 0.6
-                : null,
-            color: Colors.amber,
-            child: Image.asset('assets/tools/Menu.png', fit: BoxFit.cover)),
-        PointsWidget(constraints: constraints),
-      ];
-    }
-    return [
-      Container(
-        width:
-            constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.6 : null,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_controller != null && _controller!.value.isInitialized) ...[
-              AspectRatio(
-                aspectRatio: _controller!.value.aspectRatio,
-                child: VideoPlayer(_controller!),
-              ),
-              VideoProgressIndicator(_controller!, allowScrubbing: true),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  IconButton(
-                    icon: Icon(_controller!.value.isPlaying
-                        ? Icons.pause
-                        : Icons.play_arrow),
-                    onPressed: () {
-                      setState(() {
-                        _controller!.value.isPlaying
-                            ? _controller!.pause()
-                            : _controller!.play();
-                      });
-                    },
-                  ),
-                  IconButton(
-                    icon: Icon(isMuted ? Icons.volume_off : Icons.volume_up),
-                    onPressed: toggleMute,
-                  ),
-                ],
-              )
-            ] else
-              Image.asset('assets/tools/Menu.png'),
-          ],
-        ),
-      ),
-      PointsWidget(constraints: constraints),
-    ];
-  }
-
   @override
   void dispose() {
     _controller?.removeListener(videoListener);
     saveVideoPosition();
     _controller?.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -227,12 +177,14 @@ class _PresentationViewState extends State<PresentationView> {
             isLoading = false;
             _controller!.seekTo(Duration(seconds: lastPosition.toInt()));
             _controller!.addListener(videoListener);
-            toggleMute();
+            toggleMute(context);
             _controller!.play();
           });
         }
       }).catchError((error) {
-        print('Error initializing video player: $error');
+        if (kDebugMode) {
+          //print('Error initializing video player: $error');
+        }
         if (mounted) {
           setState(() {
             isLoading = false;
@@ -250,75 +202,111 @@ class _PresentationViewState extends State<PresentationView> {
     saveVideoPosition();
   }
 
-  void toggleMute() {
+  void toggleMute(BuildContext context) {
     setState(() {
+      isMuted = !isMuted;
+      _controller?.setVolume(isMuted ? 0.0 : 1.0);
       if (isMuted) {
-        _controller?.setVolume(1.0);
-        isMuted = false;
+        _timer?.cancel();
       } else {
-        _controller?.setVolume(0.0);
-        isMuted = true;
+        _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+          setState(() {
+            _seconds += 3;
+            _logPlaybackEvent(context, _seconds);
+          });
+        });
       }
     });
   }
-}
 
-class PointsWidget extends StatelessWidget {
-  final BoxConstraints constraints;
+  void _logPlaybackEvent(BuildContext context, int playbackSeconds) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+    String? sessionId = prefs.getString('sessionId');
+    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
 
-  PointsWidget({required this.constraints});
+    EventDetails details = EventDetails(playbackTime: playbackSeconds);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width:
-          constraints.maxWidth > maxWidth ? constraints.maxWidth * 0.4 : null,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const SizedBox(height: 10),
-          CustomTitleWidget(
-            text: "Impulsa tu Restaurante",
-            constraints: constraints,
-            maxWidth: maxWidth,
-          ),
-          const SizedBox(height: 10),
-          PointRowWidget(
-            text: 'Vende más mostrando mejor tus platillos',
-            icon: Icons.trending_up,
-            maxWidth: maxWidth,
-            constraints: constraints,
-            iconPosition: "left",
-          ),
-          const SizedBox(height: 10),
-          PointRowWidget(
-            text: 'Ahorra dinero en impresiones',
-            icon: Icons.attach_money,
-            maxWidth: maxWidth,
-            constraints: constraints,
-            iconPosition: "left",
-          ),
-          const SizedBox(height: 10),
-          PointRowWidget(
-            text: 'Libera carga de trabajo a tus meseros',
-            icon: Icons.group,
-            maxWidth: maxWidth,
-            constraints: constraints,
-            iconPosition: "left",
-          ),
-          const SizedBox(height: 10),
-          PointRowWidget(
-            text: 'Marketing y promoción para tu restaurante',
-            icon: Icons.campaign,
-            maxWidth: maxWidth,
-            constraints: constraints,
-            iconPosition: "left",
-          ),
-          const SizedBox(height: 20),
-          DownArrowAnimationWidget(),
-        ],
-      ),
-    );
+    LandingUserEventModel event = LandingUserEventModel(
+        userId: userId ?? 'defaultUserId',
+        sessionId: sessionId ?? 'defaultSessionId',
+        eventType: 'PlaybackWithVolume',
+        eventTimestamp: DateTime.parse(eventTimestamp),
+        details: details);
+
+    if (kDebugMode) {
+      //print(event.toJson());
+    }
+
+    // Imprimir mensaje después de lanzar la URL
+    //print('Enviando eventos pendientes... _logPlaybackEvent');
+    Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
   }
 }
+
+/*
+  void toggleMute() {
+    setState(() {
+      isMuted = !isMuted;
+      _controller?.setVolume(isMuted ? 0.0 : 1.0);
+      if (isMuted) {
+        _timer?.cancel();
+      } else {
+        _timer = Timer.periodic(const Duration(seconds: 3), (timer) {
+          setState(() {
+            _seconds += 3;
+            _logPlaybackEvent();
+          });
+        });
+      }
+    });
+  }
+
+*/
+
+/*
+  void _logPlaybackEvent() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? userId = prefs.getString('userId');
+    String? sessionId = prefs.getString('sessionId');
+    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+    EventDetails details = EventDetails(
+        playbackTime:
+            _seconds
+        );
+
+
+    LandingUserEventModel event = LandingUserEventModel(
+        userId: userId ?? 'defaultUserId',
+        sessionId: sessionId ?? 'undefinedSessionId',
+        eventType: 'PlaybackWithVolume',
+        eventTimestamp: DateTime.parse(eventTimestamp),
+        details: details);
+
+    if (kDebugMode) {
+      print(event.toJson());
+    }
+    */
+
+  
+
+/*
+  void _logPlaybackEvent() async {
+    String? sessionId = prefs?.getString('sessionId');
+    String? userId = prefs?.getString('userId');
+    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
+
+    var event = {
+      "UserId": userId,
+      "SessionId": sessionId ?? 'undefinedSessionId',
+      "EventType": "PlaybackWithVolume",
+      "EventTimestamp": eventTimestamp,
+      "EventDetails": {"PlaybackTime": _seconds}
+    };
+
+    if (kDebugMode) {
+      print(event);
+    }
+  }*/
+
