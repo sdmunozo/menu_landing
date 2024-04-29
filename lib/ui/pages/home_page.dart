@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 4), () {
+    Timer(Duration(seconds: 3), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -128,6 +128,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         showPromotionalWidget = true;
         getViewHeights();
+        scrollController.jumpTo((whyUsViewHeightSeen));
       });
     }
   }
