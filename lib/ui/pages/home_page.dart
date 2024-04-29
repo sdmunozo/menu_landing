@@ -36,6 +36,20 @@ class _HomePageState extends State<HomePage> {
   bool showPromotionalWidget = false;
   bool checkActivityBanner = false;
 
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
   final Map<String, GlobalKey> keys = {
     'promotionalWidget': GlobalKey(),
     'presentationView': GlobalKey(),
@@ -388,19 +402,48 @@ class _HomePageState extends State<HomePage> {
     });
 
     return Scaffold(
-      body: Column(
-        children: [
-          if (showPromotionalWidget)
-            PromotionalWidget(widgetKey: keys['promotionalWidget']!),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: scrollController,
-              child: _HomeBody(keys: keys),
+      body: Stack(children: [
+        Column(
+          children: [
+            if (showPromotionalWidget)
+              PromotionalWidget(widgetKey: keys['promotionalWidget']!),
+            Expanded(
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: _HomeBody(keys: keys),
+              ),
             ),
-          )
-        ],
-      ),
+          ],
+        ),
+        if (_isLoading)
+          Positioned.fill(
+            child: Container(
+              color: Colors.indigo,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+            ),
+          ),
+      ]),
     );
+
+/*
+       if (_isLoading)
+          Positioned(
+            child: Container(
+              height: 300,
+              color: Colors.black
+                  .withOpacity(0.8), // Cambiar la opacidad para pruebas
+              child: Center(
+                child: CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+            ),
+          ),
+ */
   }
 }
 
@@ -440,3 +483,42 @@ class _HomeBodyState extends State<_HomeBody> {
     );
   }
 }
+
+/*
+class _HomeBody extends StatefulWidget {
+  final Map<String, GlobalKey> keys;
+
+  const _HomeBody({required this.keys});
+
+  @override
+  State<_HomeBody> createState() => _HomeBodyState();
+}
+
+class _HomeBodyState extends State<_HomeBody> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: const Color.fromRGBO(246, 246, 246, 1),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            PresentationView(
+              viewKey: widget.keys['presentationView']!,
+            ),
+            MenuHighlightsView(viewKey: widget.keys['menuHighlightsView']!),
+            MenuScreensView(viewKey: widget.keys['menuScreensView']!),
+            ForWhoView(viewKey: widget.keys['forWhoView']!),
+            WhyUsView(viewKey: widget.keys['whyUsView']!),
+            SuscriptionsView(viewKey: widget.keys['suscriptionsView']!),
+            TestimonialsView(viewKey: widget.keys['testimonialsView']!),
+            FAQView(viewKey: widget.keys['faqView']!),
+            TrustElementsView(viewKey: widget.keys['trustElementsView']!),
+            const BuildFooterWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+*/

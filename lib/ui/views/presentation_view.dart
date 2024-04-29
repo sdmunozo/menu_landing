@@ -53,6 +53,8 @@ class _PresentationViewState extends State<PresentationView> {
   bool hasError = false;
   bool isLoading = true;
   Timer? _timer;
+  Duration _lastSavedPosition = Duration.zero;
+  Duration _accumulatedPlayback = Duration.zero;
   int _seconds = 0;
 
   @override
@@ -153,17 +155,12 @@ class _PresentationViewState extends State<PresentationView> {
   @override
   void dispose() {
     _controller?.removeListener(videoListener);
-    saveVideoPosition();
+    if (_controller != null) {
+      saveVideoPosition(_controller!.value.position);
+    }
     _controller?.dispose();
     _timer?.cancel();
     super.dispose();
-  }
-
-  Future<void> saveVideoPosition() async {
-    if (prefs != null && mounted && _controller != null) {
-      await prefs!.setDouble(
-          'lastPosition', _controller!.value.position.inSeconds.toDouble());
-    }
   }
 
   Future<void> initializeVideoPlayer() async {
@@ -195,16 +192,22 @@ class _PresentationViewState extends State<PresentationView> {
   }
 
   void videoListener() {
-    if (_controller != null &&
-        _controller!.value.position >= _controller!.value.duration) {
-      _controller!.seekTo(Duration.zero);
-      _controller!.play();
+    if (_controller != null) {
+      Duration currentPosition = _controller!.value.position;
+      _accumulatedPlayback += currentPosition - _lastSavedPosition;
+      _lastSavedPosition = currentPosition;
+
+      if (_accumulatedPlayback >= const Duration(seconds: 5)) {
+        saveVideoPosition(currentPosition);
+        _accumulatedPlayback =
+            Duration.zero; // Reset the accumulated playback time
+      }
     }
-    if (positionvideo <= 25) {
-      positionvideo++;
-    } else {
-      saveVideoPosition();
-      positionvideo = 0;
+  }
+
+  Future<void> saveVideoPosition(Duration position) async {
+    if (prefs != null && mounted && _controller != null) {
+      await prefs!.setDouble('lastPosition', position.inSeconds.toDouble());
     }
   }
 
