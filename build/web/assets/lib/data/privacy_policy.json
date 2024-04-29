@@ -1,22 +1,25 @@
 {
-    "title": "Política de Privacidad de 4uRest",
-    "content": [
-      {
-        "type": "bold",
-        "text": "Política de Privacidad de 4uRest"
-      },
-      {
-        "type": "normal",
-        "text": "En 4uRest, respetamos su privacidad y estamos comprometidos con proteger la información personal que pueda proporcionarnos a través de nuestra página web. Actualmente, nuestra página web no recopila información personal directamente de usted. Para procesar pagos, utilizamos Stripe, un proveedor de servicios de pago externo, que tiene sus propias políticas de privacidad. Le recomendamos revisar las políticas de privacidad de Stripe antes de proporcionar sus datos de pago."
-      },
-      {
-        "type": "normal",
-        "text": "Esta política de privacidad está sujeta a cambios sin previo aviso. Le recomendamos revisarla periódicamente para estar informado de cualquier cambio."
-      },
-      {
-        "type": "bold",
-        "text": "Fecha de última actualización: Abril de 2024"
-      }
-    ]
-  }
-  
+  "title": "Política de Privacidad de 4uRest",
+  "content": [
+    {
+      "type": "bold",
+      "text": "Política de Privacidad de 4uRest"
+    },
+    {
+      "type": "normal",
+      "text": "En 4uRest, respetamos su privacidad y estamos comprometidos con proteger la información personal que pueda proporcionarnos a través de nuestra página web. Actualmente, nuestra página web no recopila información personal directamente de usted. Para procesar pagos, utilizamos Stripe, un proveedor de servicios de pago externo, que tiene sus propias políticas de privacidad. Le recomendamos revisar las políticas de privacidad de Stripe antes de proporcionar sus datos de pago."
+    },
+    {
+      "type": "normal",
+      "text": "Hemos implementado rastreadores de actividad para mejorar nuestra página web mediante la optimización interna. Estos rastreadores recogen datos como identificadores de usuario y sesión, tipos de eventos, y marcas de tiempo, exclusivamente para fines analíticos internos."
+    },
+    {
+      "type": "normal",
+      "text": "Esta política de privacidad está sujeta a cambios sin previo aviso. Le recomendamos revisarla periódicamente para estar informado de cualquier cambio."
+    },
+    {
+      "type": "bold",
+      "text": "Fecha de última actualización: Abril de 2024"
+    }
+  ]
+}

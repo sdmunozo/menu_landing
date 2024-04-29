@@ -1,34 +1,37 @@
 {
-    "title": "Términos y Condiciones de 4uRest",
-    "content": [
-      {
-        "type": "bold",
-        "text": "Términos y Condiciones de 4uRest"
-      },
-      {
-        "type": "normal",
-        "text": "Bienvenido a 4uRest. Al acceder y utilizar nuestra página web, usted acepta cumplir con los siguientes términos y condiciones:"
-      },
-      {
-        "type": "normal",
-        "text": "1. Contenido del Sitio: El contenido de esta página web es para su información general y uso. Está sujeto a cambios sin previo aviso."
-      },
-      {
-        "type": "normal",
-        "text": "2. Uso de la página web: El uso de cualquier información o material en esta página web es enteramente bajo su propio riesgo, por lo que no seremos responsables. Asegúrese de que los productos, servicios o información disponibles a través de esta página web cumplan con sus requisitos específicos."
-      },
-      {
-        "type": "normal",
-        "text": "3. Propiedad Intelectual: Todo el contenido publicado en esta página web es propiedad de o está licenciado por 4uRest. Este contenido incluye, pero no se limita a, el diseño, el layout, la apariencia, los gráficos y los textos. Se prohíbe la reproducción, excepto conforme a lo establecido en los avisos de derechos de autor, que forman parte de estos términos y condiciones."
-      },
-      {
-        "type": "normal",
-        "text": "4. Enlaces a sitios de terceros: Nuestra página web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que ha utilizado estos enlaces para salir de nuestra página, debe tener en cuenta que no tenemos ningún control sobre el otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que usted proporcione mientras visita tales sitios y estos sitios no están gobernados por esta declaración de privacidad. Debe tener precaución y revisar la declaración de privacidad aplicable al sitio web en cuestión."
-      },
-      {
-        "type": "bold",
-        "text": "Fecha de última actualización: Abril de 2024"
-      }
-    ]
-  }
-  
+  "title": "Términos y Condiciones de 4uRest",
+  "content": [
+    {
+      "type": "bold",
+      "text": "Términos y Condiciones de 4uRest"
+    },
+    {
+      "type": "normal",
+      "text": "Bienvenido a 4uRest. Al acceder y utilizar nuestra página web, usted acepta cumplir con los siguientes términos y condiciones:"
+    },
+    {
+      "type": "normal",
+      "text": "1. Contenido del Sitio: El contenido de esta página web es para su información general y uso. Está sujeto a cambios sin previo aviso."
+    },
+    {
+      "type": "normal",
+      "text": "2. Uso de la página web: El uso de cualquier información o material en esta página web es enteramente bajo su propio riesgo, por lo que no seremos responsables. Asegúrese de que los productos, servicios o información disponibles a través de esta página web cumplan con sus requisitos específicos."
+    },
+    {
+      "type": "normal",
+      "text": "3. Propiedad Intelectual: Todo el contenido publicado en esta página web es propiedad de o está licenciado por 4uRest. Este contenido incluye, pero no se limita a, el diseño, el layout, la apariencia, los gráficos y los textos. Se prohíbe la reproducción, excepto conforme a lo establecido en los avisos de derechos de autor, que forman parte de estos términos y condiciones."
+    },
+    {
+      "type": "normal",
+      "text": "4. Enlaces a sitios de terceros: Nuestra página web puede contener enlaces a otros sitios web de interés. Sin embargo, una vez que ha utilizado estos enlaces para salir de nuestra página, debe tener en cuenta que no tenemos ningún control sobre el otro sitio web. Por lo tanto, no podemos ser responsables de la protección y privacidad de cualquier información que usted proporcione mientras visita tales sitios y estos sitios no están gobernados por esta declaración de privacidad. Debe tener precaución y revisar la declaración de privacidad aplicable al sitio web en cuestión."
+    },
+    {
+      "type": "normal",
+      "text": "Hemos integrado rastreadores de actividad para monitorizar el comportamiento de los usuarios y mejorar la funcionalidad de nuestra página web. Esta monitorización es anónima y solo se utiliza para fines de análisis y optimización interna."
+    },
+    {
+      "type": "bold",
+      "text": "Fecha de última actualización: Abril de 2024"
+    }
+  ]
+}

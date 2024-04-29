@@ -79,8 +79,6 @@ class PointsWidget extends StatelessWidget {
                 onTap: () =>
                     _showTestimonial(context, "assets/Testimonios/Tes01.jpeg"),
               ),
-
-              // Siguiente testimonio
               TestimonialCard(
                 testimonialText: "Excelente!! Fácil y práctico",
                 authorName: "Smoke House",
@@ -91,8 +89,6 @@ class PointsWidget extends StatelessWidget {
                 onTap: () =>
                     _showTestimonial(context, "assets/Testimonios/Tes02.jpeg"),
               ),
-
-              // Siguiente testimonio
               TestimonialCard(
                 testimonialText:
                     "Va excelente! Me gustaría que el color fuera personalizado",
@@ -104,8 +100,6 @@ class PointsWidget extends StatelessWidget {
                 onTap: () =>
                     _showTestimonial(context, "assets/Testimonios/Tes03.jpeg"),
               ),
-
-              // Siguiente testimonio
               TestimonialCard(
                 testimonialText:
                     "La verdad es que muy bien, ha tenido buena aceptación",
@@ -134,7 +128,6 @@ class PointsWidget extends StatelessWidget {
     );
   }
 
-// Función para logear el evento de ampliación de imagen
   void logImageZoomEvent(String imagePath, BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     String? userId = prefs.getString('userId');
@@ -142,15 +135,9 @@ class PointsWidget extends StatelessWidget {
     String eventTimestamp = DateTime.now().toUtc().toIso8601String();
     String imageName = imagePath.split('/').last.split('.').first;
 
-    // Creando el objeto de detalles del evento
-    EventDetails details = EventDetails(
-        imageId:
-            imagePath, // Asumiendo que 'imageId' es adecuado para almacenar la ruta de la imagen
-        linkLabel:
-            imageName // Utilizando 'linkLabel' para almacenar el nombre de la imagen
-        );
+    EventDetails details =
+        EventDetails(imageId: imagePath, linkLabel: imageName);
 
-    // Creando el objeto del evento principal
     LandingUserEventModel event = LandingUserEventModel(
         userId: userId ?? 'defaultUserId',
         sessionId: sessionId ?? 'defaultSessionId',
@@ -158,34 +145,6 @@ class PointsWidget extends StatelessWidget {
         eventTimestamp: DateTime.parse(eventTimestamp),
         details: details);
 
-    if (kDebugMode) {
-      //print(event.toJson()); // Utiliza toJson para imprimir el evento
-    }
-
-    // Imprimir mensaje después de lanzar la URL
-    //print('Enviando eventos pendientes... ImageZoom ${details.linkLabel}');
     Provider.of<UserEventProvider>(context, listen: false).addEvent(event);
   }
-
-/*
-  // Función para logear el evento de ampliación de imagen
-  void logImageZoomEvent(String imagePath) async {
-    final prefs = await SharedPreferences.getInstance();
-    String? userId = prefs.getString('userId');
-    String? sessionId = prefs.getString('sessionId');
-    String eventTimestamp = DateTime.now().toUtc().toIso8601String();
-    String imageName = imagePath.split('/').last.split('.').first;
-
-    var event = {
-      "userId": userId ?? 'defaultUserId',
-      "SessionId": sessionId ?? 'defaultSessionId',
-      "EventType": "ImageZoom",
-      "EventTimestamp": eventTimestamp,
-      "EventDetails": {"ImagePath": imagePath, "ImageName": imageName}
-    };
-
-    if (kDebugMode) {
-      print(event);
-    }
-  }*/
 }
