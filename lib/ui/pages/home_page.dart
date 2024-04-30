@@ -34,18 +34,6 @@ class _HomePageState extends State<HomePage> {
   final ScrollController scrollController = ScrollController();
   bool _isLoading = true;
 
-  @override
-  void initState() {
-    super.initState();
-    Timer(Duration(seconds: 3), () {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
-    });
-  }
-
   final Map<String, GlobalKey> keys = {
     'promotionalWidget': GlobalKey(),
     'presentationView': GlobalKey(),
@@ -123,12 +111,30 @@ class _HomePageState extends State<HomePage> {
         faqViewHeightSeen + getViewHeight('trustElementsView', context);
   }
 
+  @override
+  void initState() {
+    super.initState();
+    Timer(Duration(seconds: 3), () {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    });
+  }
+
   void updatePromotionalWidgetVisibility(String activeView) {
     if (!showPromotionalWidget) {
       setState(() {
         showPromotionalWidget = true;
         getViewHeights();
-        scrollController.jumpTo((whyUsViewHeightSeen));
+      });
+      Timer(const Duration(milliseconds: 300), () {
+        if (mounted) {
+          scrollController.animateTo(whyUsViewHeightSeen,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeOut);
+        }
       });
     }
   }
@@ -291,10 +297,10 @@ class _HomePageState extends State<HomePage> {
         activeView = "suscriptionsView";
         updatePromotionalWidgetVisibility(activeView);
 
-        if (scrollController.hasClients && jumpedToSuscriptions <= 1) {
+        /* if (scrollController.hasClients && jumpedToSuscriptions <= 1) {
           scrollController.jumpTo((whyUsViewHeightSeen));
           jumpedToSuscriptions++;
-        }
+        }*/
       } else if (scrollController.position.pixels <=
           testimonialsViewHeightSeen) {
         activeView = "testimonialsView";
