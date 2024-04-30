@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
         showPromotionalWidget = true;
         getViewHeights();
       });
-      Timer(const Duration(milliseconds: 300), () {
+      Timer(const Duration(milliseconds: 200), () {
         if (mounted) {
           scrollController.animateTo(whyUsViewHeightSeen,
               duration: const Duration(milliseconds: 300),
