@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:landing_v3/ui/shared/custom_title_widget.dart';
 import 'package:landing_v3/ui/shared/down_arrow_animation_widget.dart';
+import 'package:landing_v3/ui/shared/link_menu_demo_widget.dart';
 import 'package:landing_v3/ui/shared/type_suscription_widget.dart';
 
 const maxWidth = 1000.0;
@@ -147,6 +148,8 @@ class PointsWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
+          LinkMenuDemoWidget(),
+          const SizedBox(height: 20),
           const DownArrowAnimationWidget(),
         ],
       ),

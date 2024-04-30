@@ -296,11 +296,6 @@ class _HomePageState extends State<HomePage> {
           suscriptionsViewHeightSeen) {
         activeView = "suscriptionsView";
         updatePromotionalWidgetVisibility(activeView);
-
-        /* if (scrollController.hasClients && jumpedToSuscriptions <= 1) {
-          scrollController.jumpTo((whyUsViewHeightSeen));
-          jumpedToSuscriptions++;
-        }*/
       } else if (scrollController.position.pixels <=
           testimonialsViewHeightSeen) {
         activeView = "testimonialsView";
