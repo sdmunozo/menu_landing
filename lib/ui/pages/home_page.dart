@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:landing_v3/models/landing_user_event_model.dart';
+import 'package:landing_v3/models/specific_event_models.dart';
 import 'package:landing_v3/provider/promotional_widget_height_provider.dart.dart';
 import 'package:landing_v3/provider/user_event_provider_provider.dart';
 import 'package:landing_v3/provider/view_widget_height_provider.dart';
@@ -114,7 +115,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 3), () {
+    Timer(const Duration(seconds: 3), () {
       if (mounted) {
         setState(() {
           _isLoading = false;
@@ -419,29 +420,28 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         if (_isLoading)
-          if (_isLoading)
-            Positioned.fill(
-              child: Container(
-                color: Colors.white,
-                child: Center(
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Container(
-                        width: 300,
-                        height: 300,
-                        child: CircularProgressIndicator(
-                          valueColor:
-                              AlwaysStoppedAnimation<Color>(Color(0xff24ace4)),
-                        ),
+          Positioned.fill(
+            child: Container(
+              color: Colors.white,
+              child: Center(
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xff24ace4)),
                       ),
-                      Image.asset('assets/tools/4uRest-DM-3.png',
-                          width: 200, height: 200),
-                    ],
-                  ),
+                    ),
+                    Image.asset('assets/tools/4uRest-DM-3.png',
+                        width: 200, height: 200),
+                  ],
                 ),
               ),
             ),
+          ),
       ]),
     );
   }

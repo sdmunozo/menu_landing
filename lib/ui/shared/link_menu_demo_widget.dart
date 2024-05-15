@@ -65,7 +65,7 @@ class _LinkMenuDemoWidgetState extends State<LinkMenuDemoWidget>
     _backgroundColor = ColorTween(begin: Colors.white, end: Colors.white)
         .animate(_animationController);
 
-    _timer = Timer.periodic(Duration(seconds: 2), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) {
       setState(() {
         _logoIndex = (_logoIndex + 1) % logos.length;
       });
@@ -90,7 +90,7 @@ class _LinkMenuDemoWidgetState extends State<LinkMenuDemoWidget>
             onTap: () => launchUrlLink(Uri.parse(url), context),
             child: Container(
               width: 400,
-              padding: EdgeInsets.symmetric(vertical: 10),
+              padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(
                 color: _backgroundColor.value,
                 border: Border.all(
@@ -105,7 +105,7 @@ class _LinkMenuDemoWidgetState extends State<LinkMenuDemoWidget>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Image.asset(logos[_logoIndex], width: 50),
-                    Expanded(
+                    const Expanded(
                       child: Text(
                         'Menu Digital Demo Aquí',
                         textAlign: TextAlign.center,
